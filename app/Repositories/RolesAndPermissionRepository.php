@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Interface\RolesAndPermissionInterface;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -15,7 +17,7 @@ class RolesAndPermissionRepository implements RolesAndPermissionInterface
         $this->permission = $permission;
     }
 
-    public function getRoles($request)
+    public function getRoles($request): LengthAwarePaginator
     {
         $query = $this->role->query()->with('permissions');
         if ($request->search) {
@@ -24,12 +26,12 @@ class RolesAndPermissionRepository implements RolesAndPermissionInterface
         return $query->orderByDesc('id')->paginate(10);
     }
 
-    public function permissions()
+    public function permissions(): Collection
     {
         return $this->permission->all();
     }
 
-    public function updatePermissions($role, $permissions)
+    public function updatePermissions($role, $permissions): mixed
     {
         return $role->syncPermissions($permissions);
     }

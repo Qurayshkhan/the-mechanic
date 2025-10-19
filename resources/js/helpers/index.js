@@ -8,11 +8,22 @@ export const formatDate = (date) => {
     });
 };
 
-export const can = (user, permission) => {
-    return user?.permissions?.includes(permission);
-}
 
-
-export const hasRole = (user, role) => {
-    return user?.roles?.includes(role);
+export const hasRole = (user, roleName) => {
+    return user?.roles?.some((r) => r.name === roleName);
 };
+
+
+export const can = (user, permissionName) => {
+    if (!user || !Array.isArray(user.roles)) return false;
+
+
+    const userPermissions = user.roles.flatMap(
+        (role) => role.permissions?.map((p) => p.name) || []
+    );
+
+
+    return userPermissions.includes(permissionName);
+};
+
+

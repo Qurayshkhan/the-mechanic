@@ -1,6 +1,6 @@
 import { Home, Shield, Users } from "lucide-react";
 
-export const AdminDashboardLink = [
+export const links = [
     {
         name: "Dashboard",
         link: "dashboard",

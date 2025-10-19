@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, usePage } from "@inertiajs/react";
 import { Cross, X } from "lucide-react";
-import { AdminDashboardLink } from "@/Data/AdminDashboardLinks";
+import { links } from "@/Data/Links";
+import { can } from "@/helpers";
 
 const Sidebar = ({ isOpen, onClose }) => {
     const { props } = usePage();
+    const { user } = props?.auth;
     const currentRouteName = props?.currentRouteName || "";
     return (
         <>
@@ -41,10 +43,11 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </div>
 
                 <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-                    {Array.isArray(AdminDashboardLink) &&
-                        AdminDashboardLink.map((item) => {
+                    {Array.isArray(links) &&
+                        links.map((item) => {
                             const isActive = currentRouteName === item.link;
-
+                            const hasPermission = can(user, item.type);
+                            if (!hasPermission) return null;
                             return (
                                 <Link
                                     key={item.name}
