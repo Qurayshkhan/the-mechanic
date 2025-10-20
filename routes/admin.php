@@ -22,6 +22,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'permiss
 
     Route::prefix('manage-users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.users');
+        Route::get('/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+        Route::put('/{user}/update', [UserController::class, 'edit'])->name('admin.users.update');
+        Route::delete('/{user}/delete', [UserController::class, 'delete'])->name('admin.users.destroy');
     });
 
 });

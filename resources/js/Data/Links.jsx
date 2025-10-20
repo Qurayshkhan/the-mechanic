@@ -1,4 +1,4 @@
-import { Home, Shield, Users } from "lucide-react";
+import { Home, Shield, Users, Users2 } from "lucide-react";
 
 export const links = [
     {
@@ -12,5 +12,11 @@ export const links = [
         link: "admin.rolesAndPermissions",
         icon: <Shield />,
         type: "view_role_and_permission",
+    },
+    {
+        name: "User Management",
+        link: "admin.users",
+        icon: <Users2 />,
+        type: "view_users",
     },
 ];

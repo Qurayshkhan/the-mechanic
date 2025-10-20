@@ -25,7 +25,7 @@ class RoleAndPermissionController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Admin/RoleAndPermissions/Report', [
-            'roles' => $this->rolesAndPermissionRepository->getRoles($request),
+            'roles' => Inertia::defer(fn() => $this->rolesAndPermissionRepository->getRoles($request)),
         ]);
     }
 

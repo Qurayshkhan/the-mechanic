@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Interface\RolesAndPermissionInterface;
+use App\Interface\UserInterface;
 use App\Repositories\RolesAndPermissionRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -16,11 +18,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        app()->bind(
+        $this->app->bind(
             RolesAndPermissionInterface::class,
             RolesAndPermissionRepository::class
         );
 
+        $this->app->bind(
+            UserInterface::class,
+            UserRepository::class
+        );
     }
 
     /**
