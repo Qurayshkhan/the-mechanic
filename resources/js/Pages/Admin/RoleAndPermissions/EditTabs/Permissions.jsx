@@ -5,8 +5,10 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Spinner from "@/Components/Spinner";
 import { useForm } from "@inertiajs/react";
+import useLang from "@/hooks/useLang";
 
 const Permissions = ({ role, permissions }) => {
+    const { t } = useLang();
     const initialPermissions = Array.isArray(role?.permissions)
         ? role.permissions.map((p) => p.id)
         : [];
@@ -63,7 +65,9 @@ const Permissions = ({ role, permissions }) => {
                         onChange={handleSelectAllToggle}
                     />
                     <InputLabel
-                        value={allSelected ? "Deselect All" : "Select All"}
+                        value={
+                            allSelected ? t("Deselect All") : t("Select All")
+                        }
                         className="text-gray-800 font-medium cursor-pointer"
                     />
                 </div>

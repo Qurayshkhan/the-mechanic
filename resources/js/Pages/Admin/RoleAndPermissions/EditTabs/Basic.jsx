@@ -6,8 +6,10 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { Head, useForm } from "@inertiajs/react";
 import Spinner from "@/Components/Spinner";
 import InputError from "@/Components/InputError";
+import useLang from "@/hooks/useLang";
 
 const Basic = ({ role }) => {
+    const { t } = useLang();
     const { data, setData, put, processing, errors } = useForm({
         name: role.name || "",
         guard_name: role.guard_name || "web",
@@ -59,7 +61,7 @@ const Basic = ({ role }) => {
                 <div className="flex items-center justify-end py-2">
                     <PrimaryButton type="submit" disabled={processing}>
                         {processing && <Spinner />}
-                        Update
+                        {t("Update")}
                     </PrimaryButton>
                 </div>
             </form>

@@ -12,9 +12,11 @@ import PageHeading from "@/Components/PageHeading";
 import useAuth from "@/hooks/useAuth";
 import { can } from "@/helpers";
 import { Deferred } from "@inertiajs/react";
+import useLang from "@/hooks/useLang";
 
 const Report = ({ roles }) => {
     const user = useAuth();
+    const { t } = useLang();
     return (
         <MasterLayout pageTitle="Roles & Permissions">
             <PageHeading
@@ -35,16 +37,16 @@ const Report = ({ roles }) => {
                             <thead className="bg-gray-50">
                                 <tr>
                                     <th className="border py-2 px-3 uppercase">
-                                        Name
+                                        {t("Name")}
                                     </th>
                                     <th className="border py-2 px-3 uppercase">
-                                        Guard
+                                        {t("Guard")}
                                     </th>
                                     <th className="border py-2 px-3 uppercase">
-                                        Permissions
+                                        {t("Permissions")}
                                     </th>
                                     <th className="border py-2 px-3 uppercase">
-                                        Action
+                                        {t("Action")}
                                     </th>
                                 </tr>
                             </thead>

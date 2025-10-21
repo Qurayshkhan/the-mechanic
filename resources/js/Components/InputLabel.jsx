@@ -1,18 +1,18 @@
+import useLang from "@/hooks/useLang";
+
 export default function InputLabel({
     value,
-    className = '',
+    className = "",
     children,
     ...props
 }) {
+    const { t } = useLang();
     return (
         <label
             {...props}
-            className={
-                `block text-sm font-medium text-gray-700 ` +
-                className
-            }
+            className={`block text-sm font-medium text-gray-700 ` + className}
         >
-            {value ? value : children}
+            {value ? t(value) : children}
         </label>
     );
 }

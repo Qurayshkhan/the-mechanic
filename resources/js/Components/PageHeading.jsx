@@ -4,6 +4,7 @@ import { can } from "@/helpers";
 import useAuth from "@/hooks/useAuth";
 import { router } from "@inertiajs/react";
 import { Plus } from "lucide-react";
+import useLang from "@/hooks/useLang";
 
 function PageHeading({
     title,
@@ -14,14 +15,15 @@ function PageHeading({
     isCreateBtn = false,
 }) {
     const user = useAuth();
+    const { t } = useLang();
     return (
         <>
             <div className="flex flex-wrap gap-2 justify-between items-center">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">
-                        {title}
+                        {t(title)}
                     </h1>
-                    <p className="text-gray-600">{description}</p>
+                    <p className="text-gray-600">{t(description)}</p>
                 </div>
                 {isCreateBtn && (
                     <div className="flex space-x-3">
@@ -30,7 +32,7 @@ function PageHeading({
                                 onClick={() => router.visit(route(routeName))}
                             >
                                 <Plus className="h-4 w-4 mr-2" />
-                                {btnName}
+                                {t(btnName)}
                             </PrimaryButton>
                         )}
                     </div>

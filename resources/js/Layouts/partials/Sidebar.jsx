@@ -28,7 +28,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             `}
             >
                 <div className="flex items-center justify-between p-6 border-b border-gray-800">
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center gap-1 space-x-3">
                         <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
                             <span className="text-black font-bold text-lg">
                                 M

@@ -9,40 +9,39 @@ import { Edit } from "lucide-react";
 import React, { useEffect } from "react";
 import Delete from "./Delete";
 import { Deferred } from "@inertiajs/react";
+import useLang from "@/hooks/useLang";
 
 const Report = ({ users }) => {
+    const { t } = useLang();
     const userAuth = useAuth();
 
     return (
         <>
-            <MasterLayout title="User Management">
+            <MasterLayout pageTitle="User Management">
                 <PageHeading
                     title="Users"
-                    description="Manage system users"
+                    description="Manage and control user accounts, roles, and permissions in the system."
                     permission="view_users"
                     isCreateBtn={true}
                     btnName={"New User"}
                 />
-                <Deferred
-                    data={["users"]}
-                    fallback={<Loading title="Users..." />}
-                >
+                <Deferred data={["users"]} fallback={<Loading title="users" />}>
                     <Card>
                         <div className="overflow-x-auto">
                             <table className="w-full text-center border border-gray-200">
                                 <thead>
                                     <tr>
                                         <th className="border py-2 px-3 uppercase">
-                                            Name
+                                            {t("Name")}
                                         </th>
                                         <th className="border py-2 px-3 uppercase">
-                                            Email
+                                            {t("Email")}
                                         </th>
                                         <th className="border py-2 px-3 uppercase">
-                                            Role
+                                            {t("Role")}
                                         </th>
                                         <th className="border py-2 px-3 uppercase">
-                                            Action
+                                            {t("Action")}
                                         </th>
                                     </tr>
                                 </thead>

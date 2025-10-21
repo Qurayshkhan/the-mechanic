@@ -3,11 +3,12 @@ import LanguageSwitcher from "@/Components/LanguageSwitcher";
 import { usePage } from "@inertiajs/react";
 import React, { useState } from "react";
 import Dropdown from "@/Components/Dropdown";
+import useLang from "@/hooks/useLang";
 
 const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
     const user = usePage().props.auth.user;
     const [showingUserDropdown, setShowingUserDropdown] = useState(false);
-
+    const { t } = useLang();
     return (
         <nav className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-30">
             {/* Left side - Menu toggle and page title */}
@@ -34,11 +35,11 @@ const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
 
                 {/* Page title */}
                 <div>
-                    <h1 className="md:text-xl font-semibold text-gray-900 truncate w-40 md:w-full">
+                    <h1 className="md:text-xl font-semibold text-gray-900 truncate w-40 md:w-full hidden md:block">
                         {pageTitle}
                     </h1>
                     <p className="text-sm text-gray-500 hidden sm:block">
-                        Welcome back, {user.name}
+                        {t("Welcome back")}, {user.name}
                     </p>
                 </div>
             </div>

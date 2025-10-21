@@ -3,8 +3,10 @@ import Navbar from "./partials/Navbar";
 import Sidebar from "./partials/Sidebar";
 import Alert from "@/Components/Alert";
 import { Head, usePage } from "@inertiajs/react";
+import useLang from "@/hooks/useLang";
 
 const MasterLayout = ({ children, pageTitle = "Dashboard" }) => {
+    const { t } = useLang();
     const page = usePage();
     const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -21,11 +23,14 @@ const MasterLayout = ({ children, pageTitle = "Dashboard" }) => {
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
-            <Head title={pageTitle} />
+            <Head title={t(pageTitle)} />
             <Sidebar isOpen={sidebarOpen} onClose={handleSidebarClose} />
 
             <div className="w-full">
-                <Navbar onMenuToggle={handleMenuToggle} pageTitle={pageTitle} />
+                <Navbar
+                    onMenuToggle={handleMenuToggle}
+                    pageTitle={t(pageTitle)}
+                />
 
                 <main className="p-6">
                     <div className="max-w-7xl mx-auto">

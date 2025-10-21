@@ -1,11 +1,13 @@
 import DangerButton from "@/Components/DangerButton";
 import Modal from "@/Components/Modal";
 import SecondaryButton from "@/Components/SecondaryButton";
+import useLang from "@/hooks/useLang";
 import { router } from "@inertiajs/react";
 import { Trash } from "lucide-react";
 import React, { useState } from "react";
 
 const Delete = ({ id }) => {
+    const { t } = useLang();
     const [confirmRecordDeletion, setConfirmRecordDeletion] = useState(false);
 
     const handleCloseModal = () => {
@@ -27,15 +29,15 @@ const Delete = ({ id }) => {
             />
             <Modal show={confirmRecordDeletion} onClose={handleCloseModal}>
                 <div className="p-2">
-                    <h2 class="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete the record?
+                    <h2 className="text-lg font-medium text-gray-900">
+                        {t("Are you sure you want to delete the record?")}
                     </h2>
-                    <div class="flex mt-6 gap-4 justify-end">
+                    <div className="flex mt-6 gap-4 justify-end">
                         <SecondaryButton onClick={handleCloseModal}>
-                            Cancel
+                            {t("Cancel")}
                         </SecondaryButton>
                         <DangerButton onClick={handleDelete}>
-                            Delete
+                            {t("Delete")}
                         </DangerButton>
                     </div>
                 </div>

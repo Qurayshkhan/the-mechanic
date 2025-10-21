@@ -1,3 +1,4 @@
+import useLang from "@/hooks/useLang";
 import React, { useEffect, useState } from "react";
 
 const Alert = ({ pageProps }) => {
@@ -5,14 +6,12 @@ const Alert = ({ pageProps }) => {
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [infoMessage, setInfoMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const { t } = useLang();
 
-    // Close alert
     const closeAlert = () => {
         setShowInfoMessage(false);
         setShowErrorMessage(false);
     };
-
-    // Effect: show alert when props change
     useEffect(() => {
         if (pageProps?.alert) {
             setShowInfoMessage(true);
@@ -29,7 +28,6 @@ const Alert = ({ pageProps }) => {
 
     return (
         <>
-            {/* ✅ Success Message */}
             {showInfoMessage && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black/60 z-[1000] flex items-center justify-center">
                     <div
@@ -38,7 +36,7 @@ const Alert = ({ pageProps }) => {
                     >
                         <div className="flex items-center">
                             <h3 className="font-semibold text-3xl text-gray-800 leading-tight">
-                                Success
+                                {t("Success")}
                             </h3>
                             <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500">
                                 <svg
@@ -78,13 +76,12 @@ const Alert = ({ pageProps }) => {
                         </div>
                         <div
                             className="font-semibold text-xl mt-2"
-                            dangerouslySetInnerHTML={{ __html: infoMessage }}
+                            dangerouslySetInnerHTML={{ __html: t(infoMessage) }}
                         />
                     </div>
                 </div>
             )}
 
-            {/* ❌ Error Message */}
             {showErrorMessage && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black/60 z-[1000] flex items-center justify-center">
                     <div
@@ -93,7 +90,7 @@ const Alert = ({ pageProps }) => {
                     >
                         <div className="flex items-center">
                             <h3 className="font-semibold text-3xl text-gray-800 leading-tight">
-                                Error
+                                {t("Error")}
                             </h3>
                             <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 rounded-lg">
                                 <svg
@@ -133,7 +130,9 @@ const Alert = ({ pageProps }) => {
                         </div>
                         <div
                             className="font-semibold text-xl mt-2"
-                            dangerouslySetInnerHTML={{ __html: errorMessage }}
+                            dangerouslySetInnerHTML={{
+                                __html: t(errorMessage),
+                            }}
                         />
                     </div>
                 </div>

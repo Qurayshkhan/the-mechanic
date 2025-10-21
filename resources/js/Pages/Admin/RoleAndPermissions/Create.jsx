@@ -9,8 +9,10 @@ import Spinner from "@/Components/Spinner";
 import TextInput from "@/Components/TextInput";
 import MasterLayout from "@/Layouts/MasterLayout";
 import { Head, useForm } from "@inertiajs/react";
+import useLang from "@/hooks/useLang";
 
 const Create = ({ permissions }) => {
+    const { t } = useLang();
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         guard_name: "web",
@@ -19,7 +21,6 @@ const Create = ({ permissions }) => {
 
     const [allSelected, setAllSelected] = useState(false);
 
-    // ✅ Handle individual permission toggle
     const handleCheckboxChange = (permissionId) => {
         setData((prevData) => {
             const current = prevData.permissions || [];
@@ -32,7 +33,6 @@ const Create = ({ permissions }) => {
         });
     };
 
-    // ✅ Handle Select/Deselect All toggle
     const handleSelectAllToggle = () => {
         if (allSelected) {
             setData("permissions", []);
@@ -52,7 +52,7 @@ const Create = ({ permissions }) => {
 
     return (
         <MasterLayout pageTitle="Create Role">
-            <Head title="Create Role" />
+            <Head title={t("Create Role")} />
 
             <BackButton />
 
@@ -69,7 +69,7 @@ const Create = ({ permissions }) => {
                                 onChange={(e) =>
                                     setData("name", e.target.value)
                                 }
-                                placeholder="Enter role name"
+                                placeholder={t("Enter role name")}
                             />
                             <InputError message={errors.name} />
                         </div>
@@ -102,8 +102,8 @@ const Create = ({ permissions }) => {
                             <InputLabel
                                 value={
                                     allSelected
-                                        ? "Deselect All Permissions"
-                                        : "Select All Permissions"
+                                        ? t("Deselect All Permissions")
+                                        : t("Select All Permissions")
                                 }
                                 className="text-gray-800 font-medium cursor-pointer"
                             />
@@ -148,7 +148,7 @@ const Create = ({ permissions }) => {
                     <div className="flex justify-end items-center my-2">
                         <PrimaryButton type="submit" disabled={processing}>
                             {processing && <Spinner className="mr-2" />}
-                            Create
+                            {t("Create")}
                         </PrimaryButton>
                     </div>
                 </form>
