@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App;
 use App\Interface\RolesAndPermissionInterface;
 use App\Interface\UserInterface;
 use App\Repositories\RolesAndPermissionRepository;
@@ -38,7 +39,9 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share([
             'currentRouteName' => function () {
                 return Route::currentRouteName();
-            }
+            },
+            'locale' => fn() => App::getLocale(),
+            'translations' => fn() => __('messages'),
         ]);
     }
 }
