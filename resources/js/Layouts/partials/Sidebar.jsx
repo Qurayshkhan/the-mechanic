@@ -3,8 +3,10 @@ import { Link, usePage } from "@inertiajs/react";
 import { Cross, X } from "lucide-react";
 import { links } from "@/Data/Links";
 import { can } from "@/helpers";
+import useLang from "@/hooks/useLang";
 
 const Sidebar = ({ isOpen, onClose }) => {
+    const { t, locale } = useLang();
     const { props } = usePage();
     const { user } = props?.auth;
     const currentRouteName = props?.currentRouteName || "";
@@ -60,7 +62,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                                 >
                                     {item.icon}
                                     <span className="font-medium text-sm">
-                                        {item.name}
+                                        {t(item.name)}
                                     </span>
                                 </Link>
                             );

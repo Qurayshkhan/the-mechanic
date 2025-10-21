@@ -116,7 +116,7 @@ export default function Dashboard() {
                 {/* Welcome Section */}
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold text-gray-900">
-                        Welcome back!{" "}
+                        Welcome back!
                     </h1>
                     <p className="text-gray-600 mt-1">
                         Here's what's happening with your mechanics business
@@ -142,15 +142,7 @@ export default function Dashboard() {
             <div className="hidden lg:block">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900">
-                        Welcome back!{" "}
-                        <a
-                            href={route(
-                                "language.switch",
-                                locale === "en" ? "ur" : "en"
-                            )}
-                        >
-                            {locale === "en" ? "اردو" : "English"}
-                        </a>
+                        {t("welcome back")}!
                     </h1>
                     <p className="text-gray-600 mt-2">{t("welcome")}</p>
                 </div>

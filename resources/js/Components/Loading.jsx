@@ -5,18 +5,15 @@ import React from "react";
 
 const Loading = ({ title }) => {
     return (
-        <MasterLayout pageTitle={title}>
-            <Head title={title} />
-            <div
-                className="flex justify-center items-center h-64 gap-1
+        <div
+            className="flex justify-center items-center h-64 gap-1
             "
-            >
-                <p className="text-gray-600">
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                </p>
-                <p>Loading....</p>
-            </div>
-        </MasterLayout>
+        >
+            <p className="text-gray-600">
+                <Loader2 className="w-5 h-5 animate-spin" />
+            </p>
+            <p>Loading {title}....</p>
+        </div>
     );
 };
 

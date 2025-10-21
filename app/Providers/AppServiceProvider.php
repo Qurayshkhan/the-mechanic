@@ -41,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
                 return Route::currentRouteName();
             },
             'locale' => fn() => App::getLocale(),
+            'dir' => fn() => App::getLocale() === 'ur' ? 'rtl' : 'ltr',
             'translations' => fn() => __('messages'),
         ]);
     }

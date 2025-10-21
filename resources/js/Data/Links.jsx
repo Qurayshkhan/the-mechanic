@@ -2,19 +2,19 @@ import { Home, Shield, Users, Users2 } from "lucide-react";
 
 export const links = [
     {
-        name: "Dashboard",
+        name: "dashboard",
         link: "dashboard",
         icon: <Home />,
         type: "view_dashboard",
     },
     {
-        name: "Roles & Permissions",
+        name: "roles & permissions",
         link: "admin.rolesAndPermissions",
         icon: <Shield />,
         type: "view_role_and_permission",
     },
     {
-        name: "User Management",
+        name: "user management",
         link: "admin.users",
         icon: <Users2 />,
         type: "view_users",

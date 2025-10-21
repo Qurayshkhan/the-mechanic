@@ -1,4 +1,5 @@
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import LanguageSwitcher from "@/Components/LanguageSwitcher";
 import { usePage } from "@inertiajs/react";
 import React, { useState } from "react";
 import Dropdown from "@/Components/Dropdown";
@@ -44,6 +45,7 @@ const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
 
             {/* Right side - User menu and notifications */}
             <div className="flex flex-wrap items-center space-x-4">
+                <LanguageSwitcher />
                 {/* User dropdown */}
                 <div className="relative">
                     <Dropdown>
