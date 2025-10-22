@@ -41,6 +41,13 @@ return [
     "Manage and control user accounts, roles, and permissions in the system." => 'سسٹم میں صارف اکاؤنٹس، کرداروں، اور اجازتوں کا انتظام اور کنٹرول کریں۔',
     "Users" => "صارفین",
     "New User" => "نئے صارفین",
-    "users" => 'صارفین',
-
+    "users" => "صارفین",
+    "Enter your name" => "اپنا نام درج کریں",
+    "Enter your email" => "اپنا ای میل درج کریں",
+    "Password" => "پاس ورڈ",
+    "Enter your password" => "اپنا پاس ورڈ درج کریں",
+    "Enter your phone no" => "اپنا فون نمبر درج کریں",
+    "Phone no" => "فون نمبر",
+    "Roles" => "کردار",
+    "Select a role" => "کردار منتخب کریں",
 ];

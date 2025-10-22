@@ -28,9 +28,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'permiss
 
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.users');
+        Route::get('/create', [UserController::class, 'create'])->name('admin.user.create');
+        Route::post('/store', [UserController::class, 'store'])->name('admin.user.store');
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         Route::put('/{user}/update', [UserController::class, 'edit'])->name('admin.users.update');
         Route::delete('/{user}/delete', [UserController::class, 'delete'])->name('admin.users.destroy');
     });
-
 });

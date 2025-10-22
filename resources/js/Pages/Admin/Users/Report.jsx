@@ -22,6 +22,7 @@ const Report = ({ users }) => {
                     title="Users"
                     description="Manage and control user accounts, roles, and permissions in the system."
                     permission="view_users"
+                    routeName="admin.user.create"
                     isCreateBtn={true}
                     btnName={"New User"}
                 />
