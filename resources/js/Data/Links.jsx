@@ -9,7 +9,7 @@ export const links = [
     },
     {
         name: "Roles & Permissions",
-        link: "admin.rolesAndPermissions",
+        link: "admin.roles",
         icon: <Shield />,
         type: "view_role_and_permission",
     },

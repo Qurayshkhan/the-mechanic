@@ -2,13 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Interface\RolesAndPermissionInterface;
+use App\Interface\RoleInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class RolesAndPermissionRepository implements RolesAndPermissionInterface
+class RoleRepository implements RoleInterface
 {
     public $role, $permission;
     public function __construct(Role $role, Permission $permission)
@@ -26,13 +26,19 @@ class RolesAndPermissionRepository implements RolesAndPermissionInterface
         return $query->orderByDesc('id')->paginate(10);
     }
 
-    public function permissions(): Collection
+    public function create($data): Role
     {
-        return $this->permission->all();
+        return $this->role->create($data);
     }
 
-    public function updatePermissions($role, $permissions): mixed
+    public function update($role, $data): mixed
     {
-        return $role->syncPermissions($permissions);
+        return $role->update($data);
     }
+
+    public function destroy($role): mixed
+    {
+        return $role->delete();
+    }
+
 }

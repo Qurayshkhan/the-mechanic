@@ -142,9 +142,9 @@ export default function Dashboard() {
             <div className="hidden lg:block">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900">
-                        {t("welcome back")}!
+                        {t("Welcome back")}!
                     </h1>
-                    <p className="text-gray-600 mt-2">{t("welcome")}</p>
+                    <p className="text-gray-600 mt-2">{t("Welcome")}</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
