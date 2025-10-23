@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Edit from "../Edit";
+import EditLayout from "../Edit";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -23,7 +23,7 @@ const Basic = ({ role }) => {
     };
 
     return (
-        <Edit role={role}>
+        <EditLayout role={role}>
             <Head title="Edit Role" />
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -65,7 +65,7 @@ const Basic = ({ role }) => {
                     </PrimaryButton>
                 </div>
             </form>
-        </Edit>
+        </EditLayout>
     );
 };
 

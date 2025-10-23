@@ -68,7 +68,7 @@ class UserController extends Controller
     {
         $roles = $this->userRepository->roles();
 
-        return Inertia::render('Admin/Users/Edit', [
+        return Inertia::render('Admin/Users/EditTabs/Basic', [
             'user' => $user->load('roles'),
             'roles' => $roles,
         ]);

@@ -20,33 +20,6 @@ const Create = ({ roles }) => {
         phone_no: "",
         role: "",
     });
-
-    const [allSelected, setAllSelected] = useState(false);
-
-    // const handleCheckboxChange = (permissionId) => {
-    //     setData((prevData) => {
-    //         const current = prevData.permissions || [];
-    //         return {
-    //             ...prevData,
-    //             permissions: current.includes(permissionId)
-    //                 ? current.filter((id) => id !== permissionId)
-    //                 : [...current, permissionId],
-    //         };
-    //     });
-    // };
-
-    // const handleSelectAllToggle = () => {
-    //     if (allSelected) {
-    //         setData("permissions", []);
-    //     } else {
-    //         setData(
-    //             "permissions",
-    //             permissions.map((p) => p.id)
-    //         );
-    //     }
-    //     setAllSelected(!allSelected);
-    // };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route("admin.user.store"));
@@ -76,13 +49,12 @@ const Create = ({ roles }) => {
                             <InputError message={errors.name} />
                         </div>
 
-                        {/* Guard Selection */}
                         <div>
                             <InputLabel value="Email" />
-                            <input
+                            <TextInput
                                 type="email"
-                                className="rounded w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                                 name="email"
+                                className="w-full"
                                 placeholder={t("Enter your email")}
                                 value={data.email}
                                 onChange={(e) =>
@@ -94,10 +66,10 @@ const Create = ({ roles }) => {
                         </div>
                         <div>
                             <InputLabel value="Password" />
-                            <input
+                            <TextInput
                                 type="password"
-                                className="rounded w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                                 name="password"
+                                className="w-full"
                                 placeholder={t("Enter your password")}
                                 value={data.password}
                                 onChange={(e) =>
@@ -124,7 +96,7 @@ const Create = ({ roles }) => {
                         <div>
                             <InputLabel value="Roles" />
                             <select
-                                className="rounded w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                                className="rounded w-full border-gray-300 "
                                 name="role"
                                 value={data.role}
                                 onChange={(e) =>
@@ -143,7 +115,6 @@ const Create = ({ roles }) => {
                         </div>
                     </div>
 
-                    {/* Submit Button */}
                     <div className="flex justify-end items-center my-2">
                         <PrimaryButton type="submit" disabled={processing}>
                             {processing && <Spinner className="mr-2" />}
