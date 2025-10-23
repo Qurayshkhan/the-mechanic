@@ -65,7 +65,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $this->isPermissionExists('edit_user');
-        return Inertia::render('Admin/Users/Edit', [
+        return Inertia::render('Admin/Users/EditTabs/Basic', [
             'user' => $user->load('roles'),
             'roles' => $this->roleRepository->roles(),
         ]);

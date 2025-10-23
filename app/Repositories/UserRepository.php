@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Interface\UserInterface;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserInterface

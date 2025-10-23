@@ -9,7 +9,7 @@ use Illuminate\Foundation\Application;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function home()
     {
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),

@@ -54,4 +54,5 @@ return [
     "User updated successfully." => "صارف کامیابی سے اپ ڈیٹ کیا گیا۔",
     "User deleted successfully." => "صارف کامیابی سے حذف کیا گیا۔",
     "The email field is required." => "بی سے حذف کیا گیا۔",
+    "Enter new password (optional)" => "نیا پاس ورڈ درج کریں (اختیاری)",
 ];
