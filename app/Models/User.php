@@ -17,6 +17,8 @@ class User extends Authenticatable
     const MECHANIC_USER = 2;
     const CUSTOMER_USER = 3;
 
+    const ADMIN_ROLE = "Admin";
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,5 +53,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function scopeNotAdmin($query)
+    {
+        return $query->whereHas('roles', function ($q) {
+            $q->where('name', '!=', self::ADMIN_ROLE);
+        });
     }
 }

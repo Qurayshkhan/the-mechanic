@@ -17,7 +17,7 @@ class UserRepository implements UserInterface
 
     public function users($request): LengthAwarePaginator
     {
-        return $this->user->with('roles')->paginate(25);
+        return $this->user->notAdmin()->with('roles')->paginate(25);
     }
 
     public function create(array $data): User
