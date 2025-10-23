@@ -6,6 +6,7 @@ use App\Interface\UserInterface;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserInterface
 {
@@ -20,8 +21,45 @@ class UserRepository implements UserInterface
         return $this->user->with('roles')->paginate(25);
     }
 
-    public function roles()
+    public function create(array $data): User
     {
-        return Role::all();
+        $user = $this->user->create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'phone_no' => $data['phone_no'] ?? null,
+        ]);
+
+        if (!empty($data['role'])) {
+            $user->assignRole($data['role']);
+        }
+
+        return $user;
+    }
+
+    public function update(User $user, array $data): User
+    {
+        $updateData = [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone_no' => $data['phone_no'] ?? null,
+        ];
+
+        if (!empty($data['password'])) {
+            $updateData['password'] = Hash::make($data['password']);
+        }
+
+        $user->update($updateData);
+
+        if (!empty($data['role'])) {
+            $user->syncRoles([$data['role']]);
+        }
+
+        return $user;
+    }
+
+    public function destroy(User $user): bool
+    {
+        return $user->delete();
     }
 }

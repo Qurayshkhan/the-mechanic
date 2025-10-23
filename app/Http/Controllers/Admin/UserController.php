@@ -4,24 +4,30 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
+use App\Traits\PermissionTrait;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Repositories\RoleRepository;
 use Redirect;
 
 class UserController extends Controller
 {
-    protected $userRepository;
+    use PermissionTrait;
+    protected $userRepository, $roleRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, RoleRepository $roleRepository)
     {
         $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
     }
     public function index(Request $request)
     {
+        $this->isPermissionExists('view_users');
         return Inertia::render('Admin/Users/Report', [
             'users' => Inertia::defer(fn() => $this->userRepository->users($request)),
         ]);
@@ -29,7 +35,8 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = $this->userRepository->roles();
+        $this->isPermissionExists('create_user');
+        $roles = $this->roleRepository->roles();
         return Inertia::render('Admin/Users/Create', [
             'roles' => $roles,
         ]);
@@ -42,16 +49,7 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            $user = User::create([
-                'name' => $req['name'],
-                'email' => $req['email'],
-                'password' => Hash::make($req['password']),
-                'phone_no' => $req['phone_no'] ?? null,
-            ]);
-
-            if (!empty($req['role'])) {
-                $user->assignRole($req['role']);
-            }
+            $this->userRepository->create($req);
 
             DB::commit();
 
@@ -66,11 +64,41 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $roles = $this->userRepository->roles();
-
-        return Inertia::render('Admin/Users/EditTabs/Basic', [
+        $this->isPermissionExists('edit_user');
+        return Inertia::render('Admin/Users/Edit', [
             'user' => $user->load('roles'),
-            'roles' => $roles,
+            'roles' => $this->roleRepository->roles(),
         ]);
+    }
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $validated = $request->validated();
+
+        try {
+            DB::beginTransaction();
+
+            $this->userRepository->update($user, $validated);
+
+            DB::commit();
+            return Redirect::route('admin.users')->with('alert', 'User updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Redirect::back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function delete(User $user)
+    {
+        try {
+            DB::beginTransaction();
+            $this->isPermissionExists('delete_user');
+            $this->userRepository->destroy($user);
+            DB::commit();
+            return Redirect::route('admin.users')->with('alert', 'User deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Redirect::back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 }

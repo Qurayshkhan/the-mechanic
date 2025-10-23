@@ -50,4 +50,8 @@ return [
     "Phone no" => "فون نمبر",
     "Roles" => "کردار",
     "Select a role" => "کردار منتخب کریں",
+    "User created successfully." => "صارف کامیابی سے تخلیق کیا گیا۔",
+    "User updated successfully." => "صارف کامیابی سے اپ ڈیٹ کیا گیا۔",
+    "User deleted successfully." => "صارف کامیابی سے حذف کیا گیا۔",
+    "The email field is required." => "بی سے حذف کیا گیا۔",
 ];

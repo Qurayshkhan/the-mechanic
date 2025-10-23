@@ -91,7 +91,7 @@ const Create = ({ roles }) => {
                                 placeholder={t("Enter your phone no")}
                             />
 
-                            <InputError message={errors.password} />
+                            <InputError message={errors.phone_no} />
                         </div>
                         <div>
                             <InputLabel value="Roles" />

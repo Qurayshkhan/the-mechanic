@@ -20,8 +20,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'permiss
         // Permissions
         Route::get('/permission/{role}/edit', [PermissionController::class, 'editPermission'])->name('admin.roles.editPermissions');
         Route::put('permission/{role}/edit', [PermissionController::class, 'updatePermission'])->name('admin.roles.updatePermissions');
-
-
     });
 
     // admin manage users
@@ -31,7 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'permiss
         Route::get('/create', [UserController::class, 'create'])->name('admin.user.create');
         Route::post('/store', [UserController::class, 'store'])->name('admin.user.store');
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
-        Route::put('/{user}/update', [UserController::class, 'edit'])->name('admin.users.update');
+        Route::put('/{user}/update', [UserController::class, 'update'])->name('admin.user.update');
         Route::delete('/{user}/delete', [UserController::class, 'delete'])->name('admin.users.destroy');
     });
 });
