@@ -41,4 +41,8 @@ class RoleRepository implements RoleInterface
         return $role->delete();
     }
 
+    public function roles()
+    {
+        return Role::all();
+    }
 }
