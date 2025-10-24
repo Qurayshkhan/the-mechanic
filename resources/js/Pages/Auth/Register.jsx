@@ -26,6 +26,7 @@ export default function Register() {
             <Head title="Register" />
 
             <form onSubmit={submit}>
+                <h1 className="text-2xl text-center font-bold">Sign In</h1>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 

@@ -61,4 +61,9 @@ class UserRepository implements UserInterface
     {
         return $user->delete();
     }
+
+    public function getUserById(int $id)
+    {
+        return $this->user->find($id);
+    }
 }
