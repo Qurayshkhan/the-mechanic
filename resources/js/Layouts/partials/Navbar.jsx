@@ -4,16 +4,15 @@ import { usePage } from "@inertiajs/react";
 import React, { useState } from "react";
 import Dropdown from "@/Components/Dropdown";
 import useLang from "@/hooks/useLang";
+import useAuth from "@/hooks/useAuth";
 
 const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
-    const user = usePage().props.auth.user;
+    const user = useAuth();
     const [showingUserDropdown, setShowingUserDropdown] = useState(false);
     const { t } = useLang();
     return (
         <nav className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-30">
-            {/* Left side - Menu toggle and page title */}
             <div className="flex items-center space-x-4">
-                {/* Mobile menu toggle */}
                 <button
                     onClick={onMenuToggle}
                     className=" p-2 rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
@@ -33,7 +32,6 @@ const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
                     </svg>
                 </button>
 
-                {/* Page title */}
                 <div>
                     <h1 className="md:text-xl font-semibold text-gray-900 truncate w-40 md:w-full hidden md:block">
                         {pageTitle}
@@ -44,10 +42,8 @@ const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
                 </div>
             </div>
 
-            {/* Right side - User menu and notifications */}
             <div className="flex flex-wrap items-center space-x-4">
                 <LanguageSwitcher />
-                {/* User dropdown */}
                 <div className="relative">
                     <Dropdown>
                         <Dropdown.Trigger>
@@ -62,7 +58,7 @@ const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
                                         {user.name}
                                     </p>
                                     <p className="text-xs text-gray-500">
-                                        Administrator
+                                        {user.roles[0].name}
                                     </p>
                                 </div>
                                 <svg

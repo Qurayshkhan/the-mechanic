@@ -33,7 +33,10 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <h1 className="text-2xl text-center font-bold">Sign In</h1>
-                <div>
+                <p className="text-sm text-gray-500 text-center mt-2">
+                    Welcome back! Please sign in to continue to your account.
+                </p>
+                <div className="mt-6">
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
@@ -81,7 +84,7 @@ export default function Login({ status, canResetPassword }) {
                     </label>
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
+                <div className="mt-4 flex flex-wrap gap-2 items-center justify-end">
                     {canResetPassword && (
                         <Link
                             href={route("password.request")}
@@ -91,7 +94,7 @@ export default function Login({ status, canResetPassword }) {
                         </Link>
                     )}
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton className="ms-4" processing={processing}>
                         Log in
                     </PrimaryButton>
                 </div>

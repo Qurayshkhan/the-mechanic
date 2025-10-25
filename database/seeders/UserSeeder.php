@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -49,6 +50,7 @@ class UserSeeder extends Seeder
                 'name' => 'Admin',
                 'password' => Hash::make('admin123'),
                 'type' => User::ADMIN_USER,
+                'email_verified_at' => Carbon::now(),
             ]
         );
         $adminUser->assignRole($adminRole);
@@ -59,6 +61,7 @@ class UserSeeder extends Seeder
                 'name' => 'Mechanic',
                 'password' => Hash::make('mechanic123'),
                 'type' => User::MECHANIC_USER,
+                'email_verified_at' => Carbon::now(),
             ]
         );
         $mechanicUser->assignRole($mechanicRole);
@@ -69,6 +72,7 @@ class UserSeeder extends Seeder
                 'name' => 'Customer',
                 'password' => Hash::make('customer123'),
                 'type' => User::CUSTOMER_USER,
+                'email_verified_at' => Carbon::now(),
             ]
         );
         $customerUser->assignRole($customerRole);

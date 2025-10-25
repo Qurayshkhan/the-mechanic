@@ -6,12 +6,14 @@ export default function GuestLayout({ children }) {
 
     const isLoginPage = url === "/login";
     const isRegisterPage = url === "/register";
+    const isForgotPassword = url === "/forgot-password";
+    const isResetPasswordScreen = url.startsWith("/reset-password");
 
     return (
-        <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-gray-50 dark:bg-gray-900 relative">
-            <div className="hidden lg:flex flex-col justify-center items-center bg-[#26247b] text-white p-10">
-                <div className="flex flex-col items-center text-center">
-                    <ApplicationLogo className="h-20 w-20 mb-6" />
+        <div className="min-h-screen flex flex-col lg:grid lg:grid-cols-2 bg-gray-50 dark:bg-gray-900">
+            <div className="hidden lg:flex flex-col justify-center items-center bg-black text-white p-10 sticky top-0 h-screen">
+                <div className="flex flex-col items-center text-center px-4">
+                    {/* <ApplicationLogo className="h-20 w-20 mb-6" /> */}
                     <h1 className="text-3xl font-bold mb-2">
                         {isLoginPage ? "Welcome Back" : "Create Account"}
                     </h1>
@@ -23,11 +25,11 @@ export default function GuestLayout({ children }) {
                 </div>
             </div>
 
-            <div className="relative flex flex-col justify-center items-center bg-white dark:bg-gray-800">
+            <div className="relative flex flex-col justify-center items-center px-4 sm:px-6 py-10 bg-white dark:bg-gray-800 w-full overflow-y-auto">
                 {isLoginPage && (
                     <Link
                         href={route("register")}
-                        className="absolute top-6 right-6 text-sm text-gray-600  font-medium transition-colors"
+                        className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
                     >
                         Don’t have an account?
                     </Link>
@@ -36,22 +38,49 @@ export default function GuestLayout({ children }) {
                 {isRegisterPage && (
                     <Link
                         href={route("login")}
-                        className="absolute top-6 right-6 text-sm text-gray-600  font-medium transition-colors"
+                        className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
                     >
                         Already have an account?
                     </Link>
                 )}
 
-                <div className="w-full max-w-md space-y-6 px-6">
-                    <div className="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
-                        {children}
-                    </div>
+                {isForgotPassword && (
+                    <Link
+                        href={route("login")}
+                        className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
+                    >
+                        Login
+                    </Link>
+                )}
+                {isResetPasswordScreen && (
+                    <Link
+                        href={route("login")}
+                        className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
+                    >
+                        Login
+                    </Link>
+                )}
 
-                    <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-                        © {new Date().getFullYear()} Your Company. All rights
-                        reserved.
+                <div className="lg:hidden flex flex-col items-center text-center mb-6">
+                    <ApplicationLogo className="h-16 w-16 mb-4" />
+                    <h1 className="text-2xl font-bold mb-1 text-gray-800 dark:text-white">
+                        {isLoginPage ? "Welcome Back" : "Create Account"}
+                    </h1>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 max-w-xs">
+                        {isLoginPage
+                            ? "Sign in to your account and access your dashboard easily."
+                            : "Sign up now to get started with your personal dashboard."}
                     </p>
                 </div>
+
+                <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-6 sm:p-8 border border-gray-100 dark:border-gray-700">
+                    {children}
+                </div>
+
+                <p className="text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-6">
+                    © {new Date().getFullYear()} Your Company. All rights
+                    reserved.
+                </p>
             </div>
         </div>
     );

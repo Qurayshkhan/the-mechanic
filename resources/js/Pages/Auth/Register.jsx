@@ -26,7 +26,10 @@ export default function Register() {
             <Head title="Register" />
 
             <form onSubmit={submit}>
-                <h1 className="text-2xl text-center font-bold">Sign In</h1>
+                <h1 className="text-2xl text-center font-bold">Signup</h1>
+                <p className="text-sm text-gray-500 text-center mt-2">
+                    Join us today and start managing your account with ease.
+                </p>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -103,7 +106,7 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
+                <div className="mt-4 flex flex-wrap gap-2 items-center justify-end">
                     <Link
                         href={route("login")}
                         className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
@@ -111,7 +114,7 @@ export default function Register() {
                         Already registered?
                     </Link>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton className="ms-4" processing={processing}>
                         Register
                     </PrimaryButton>
                 </div>
