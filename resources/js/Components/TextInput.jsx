@@ -59,7 +59,6 @@ export default forwardRef(function TextInput(
                 ref={localRef}
             />
 
-            {/*  Toggle password visibility button */}
             <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
