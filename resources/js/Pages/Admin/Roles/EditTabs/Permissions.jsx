@@ -104,8 +104,12 @@ const Permissions = ({ role, permissions }) => {
                 </div>
 
                 <div className="flex justify-end items-center pt-4">
-                    <PrimaryButton type="submit" disabled={processing}>
-                        {processing && <Spinner className="mr-2" />} Update
+                    <PrimaryButton
+                        type="submit"
+                        processing={processing}
+                        disabled={processing}
+                    >
+                        Update
                     </PrimaryButton>
                 </div>
             </form>

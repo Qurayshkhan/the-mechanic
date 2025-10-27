@@ -117,7 +117,12 @@ const Report = ({ roles }) => {
                     </div>
 
                     <div className="flex justify-center md:justify-end">
-                        <Pagination links={roles?.links} />
+                        <Pagination
+                            links={roles?.links}
+                            from={roles?.from}
+                            to={roles?.to}
+                            total={roles?.total}
+                        />
                     </div>
                 </Card>
             </Deferred>

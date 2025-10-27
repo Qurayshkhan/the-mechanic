@@ -1,12 +1,15 @@
+import AuthTitle from "@/Components/AuthTitle";
 import Checkbox from "@/Components/Checkbox";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import useLang from "@/hooks/useLang";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Login({ status, canResetPassword }) {
+    const { t } = useLang();
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -32,10 +35,10 @@ export default function Login({ status, canResetPassword }) {
             )}
 
             <form onSubmit={submit}>
-                <h1 className="text-2xl text-center font-bold">Sign In</h1>
-                <p className="text-sm text-gray-500 text-center mt-2">
-                    Welcome back! Please sign in to continue to your account.
-                </p>
+                <AuthTitle
+                    title="Sign In"
+                    subTitle="Welcome back! Please sign in to continue to your account."
+                />
                 <div className="mt-6">
                     <InputLabel htmlFor="email" value="Email" />
 
@@ -79,7 +82,7 @@ export default function Login({ status, canResetPassword }) {
                             }
                         />
                         <span className="ms-2 text-sm text-gray-600">
-                            Remember me
+                            {t("Remember me")}
                         </span>
                     </label>
                 </div>
@@ -90,12 +93,12 @@ export default function Login({ status, canResetPassword }) {
                             href={route("password.request")}
                             className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                         >
-                            Forgot your password?
+                            {t("Forgot your password?")}
                         </Link>
                     )}
 
                     <PrimaryButton className="ms-4" processing={processing}>
-                        Log in
+                        {t("Login")}
                     </PrimaryButton>
                 </div>
             </form>

@@ -2,7 +2,7 @@
 
 return [
     'Welcome' => 'ہماری ویب سائٹ پر خوش آمدید',
-    'Welcome back' => 'دوبارہ خوش آمدید',
+    'Welcome Back' => 'دوبارہ خوش آمدید',
     'Dashboard' => 'ڈیش بورڈ',
     'roles & permissions' => 'کردار اور اجازتیں',
     'User Management' => 'صارف کا انتظام',
@@ -55,4 +55,28 @@ return [
     "User deleted successfully." => "صارف کامیابی سے حذف کیا گیا۔",
     "The email field is required." => "بی سے حذف کیا گیا۔",
     "Enter new password (optional)" => "نیا پاس ورڈ درج کریں (اختیاری)",
+    "Create Account" => "اکاؤنٹ بنائیں",
+    "Sign in to continue to your dashboard and manage your account with ease." => "اپنے ڈیش بورڈ کو جاری رکھنے کے لیے سائن ان کریں اور آسانی کے ساتھ اپنے اکاؤنٹ کا نظم کریں۔",
+    "Join us today and get access to your personalized dashboard and tools." => "آج ہی ہمارے ساتھ شامل ہوں اور اپنے ذاتی ڈیش بورڈ اور ٹولز تک رسائی حاصل کریں۔",
+    "Welcome back! Please sign in to continue to your account." => "دوبارہ خوش آمدید! اپنے اکاؤنٹ کو جاری رکھنے کے لیے براہ کرم سائن ان کریں۔",
+    "Sign In" => "سائن ان کریں",
+    "Don’t have an account?" => "کیا آپ کا اکاؤنٹ نہیں ہے؟",
+    "Login" => "لاگ ان",
+    "Forgot your password?" => "اپنا پاس ورڈ بھول گئے؟",
+    "Already have an account?" => "پہلے سے ہی ایک اکاؤنٹ ہے؟",
+    "Signup" => "سائن اپ کریں",
+    "Join us today and start managing your account with ease." => "آج ہی ہمارے ساتھ شامل ہوں اور آسانی کے ساتھ اپنے اکاؤنٹ کا نظم شروع کریں۔",
+    "Confirm Password" => "پاس ورڈ کی تصدیق کریں۔",
+    "Register" => "رجسٹر کریں۔",
+    "Already registered?" => "پہلے سے رجسٹرڈ ہیں؟",
+    "Remember me" => "مجھے یاد رکھیں",
+    "Forgot Password" => "پاس ورڈ بھول گئے۔",
+    "Forgot your password? No problem. Just let us know your email
+                address and we will email you a password reset link that will
+                allow you to choose a new one." => "اپنا پاس ورڈ بھول گئے؟ کوئی مسئلہ نہیں۔ بس ہمیں اپنا ای میل پتہ بتائیں اور ہم آپ کو ایک پاس ورڈ ری سیٹ لنک ای میل کریں گے جو آپ کو نیا منتخب کرنے کی اجازت دے گا۔",
+    "Email Password Reset Link" => "ای میل پاس ورڈ ری سیٹ لنک",
+    "Reset Password" => "پاس ورڈ ری سیٹ کریں۔",
+    "Enter your new password below to securely regain access to your account." => "اپنے اکاؤنٹ تک محفوظ طریقے سے دوبارہ رسائی حاصل کرنے کے لیے نیچے اپنا نیا پاس ورڈ درج کریں۔",
+    "Search" => "تلاش کریں۔"
+
 ];

@@ -3,7 +3,7 @@ import React from "react";
 import { router } from "@inertiajs/react";
 import clsx from "clsx";
 
-const Pagination = ({ links = [] }) => {
+const Pagination = ({ links = [], from, to, total }) => {
     if (!links.length) return null;
 
     const handleClick = (url, e) => {
@@ -16,7 +16,14 @@ const Pagination = ({ links = [] }) => {
     };
 
     return (
-        <nav className="flex justify-center mt-6">
+        <nav className="flex flex-col md:flex-row gap-2 justify-between items-center mt-6 w-full">
+            <div className="text-sm text-gray-600 flex items-center gap-1 font-bold">
+                <p>{from}</p>
+                <p>to</p>
+                <p>{to}</p>
+                <p>total</p>
+                <p>{total}</p>
+            </div>
             <ul className="flex flex-wrap items-center gap-2">
                 {links.map((link, index) => (
                     <li key={index}>

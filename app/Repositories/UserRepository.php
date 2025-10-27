@@ -17,21 +17,28 @@ class UserRepository implements UserInterface
 
     public function users($request): LengthAwarePaginator
     {
-        return $this->user->notAdmin()->with('roles')->paginate(25);
+        $query = $this->user->query();
+        return $query->notAdmin()->select('id', 'name', 'email', 'phone_no')
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->whereLike('name', '%' . $search . '%')
+                        ->orWhereLike('email', '%' . $search . '%')
+                        ->orWhereLike('phone_no', '%' . $search . '%');
+                });
+            })
+            ->with('roles')
+            ->paginate(25);
     }
 
     public function create(array $data): User
     {
-        $user = $this->user->create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'phone_no' => $data['phone_no'] ?? null,
-        ]);
+        $data['password'] = Hash::make($data['password']);
+        $user = $this->user->create($data);
 
         if (!empty($data['role'])) {
             $user->assignRole($data['role']);
         }
+
 
         return $user;
     }

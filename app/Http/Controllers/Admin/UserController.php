@@ -30,6 +30,7 @@ class UserController extends Controller
         $this->isPermissionExists('view_users');
         return Inertia::render('Admin/Users/Report', [
             'users' => Inertia::defer(fn() => $this->userRepository->users($request)),
+            'filters' => ['search' => $request->input('search', null)],
         ]);
     }
 
@@ -44,12 +45,14 @@ class UserController extends Controller
 
     public function store(UserStoreRequest $request)
     {
-        $req = $request->validated();
+        $data = $request->validated();
 
         try {
             DB::beginTransaction();
+            $data['type'] = $data['role'] ? $this->checkRoleType($data['role']) : User::CUSTOMER_USER;
+            $data['email_verified_at'] = now();
 
-            $this->userRepository->create($req);
+            $this->userRepository->create($data);
 
             DB::commit();
 
@@ -58,7 +61,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return Redirect::route('admin.users')
-                ->withErrors(['message', $e->getMessage()]);
+                ->withErrors(['message' => $e->getMessage()]);
         }
     }
 

@@ -1,8 +1,11 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
+import LanguageSwitcher from "@/Components/LanguageSwitcher";
+import useLang from "@/hooks/useLang";
 import { Link, usePage } from "@inertiajs/react";
 
 export default function GuestLayout({ children }) {
     const { url } = usePage();
+    const { t, locale } = useLang();
 
     const isLoginPage = url === "/login";
     const isRegisterPage = url === "/register";
@@ -15,13 +18,25 @@ export default function GuestLayout({ children }) {
                 <div className="flex flex-col items-center text-center px-4">
                     {/* <ApplicationLogo className="h-20 w-20 mb-6" /> */}
                     <h1 className="text-3xl font-bold mb-2">
-                        {isLoginPage ? "Welcome Back" : "Create Account"}
+                        {isLoginPage ? t("Welcome Back") : t("Create Account")}
                     </h1>
                     <p className="text-base text-white/90 max-w-sm">
                         {isLoginPage
-                            ? "Sign in to continue to your dashboard and manage your account with ease."
-                            : "Join us today and get access to your personalized dashboard and tools."}
+                            ? t(
+                                  "Sign in to continue to your dashboard and manage your account with ease."
+                              )
+                            : t(
+                                  "Join us today and get access to your personalized dashboard and tools."
+                              )}
                     </p>
+                </div>
+
+                <div
+                    className={`absolute bottom-6 ${
+                        locale === "ur" ? "right-6" : "left-6"
+                    }`}
+                >
+                    <LanguageSwitcher />
                 </div>
             </div>
 
@@ -31,7 +46,7 @@ export default function GuestLayout({ children }) {
                         href={route("register")}
                         className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
                     >
-                        Don’t have an account?
+                        {t("Don’t have an account?")}
                     </Link>
                 )}
 
@@ -40,36 +55,32 @@ export default function GuestLayout({ children }) {
                         href={route("login")}
                         className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
                     >
-                        Already have an account?
+                        {t("Already have an account?")}
                     </Link>
                 )}
 
-                {isForgotPassword && (
+                {(isForgotPassword || isResetPasswordScreen) && (
                     <Link
                         href={route("login")}
                         className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
                     >
-                        Login
-                    </Link>
-                )}
-                {isResetPasswordScreen && (
-                    <Link
-                        href={route("login")}
-                        className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
-                    >
-                        Login
+                        {t("Login")}
                     </Link>
                 )}
 
                 <div className="lg:hidden flex flex-col items-center text-center mb-6">
                     <ApplicationLogo className="h-16 w-16 mb-4" />
                     <h1 className="text-2xl font-bold mb-1 text-gray-800 dark:text-white">
-                        {isLoginPage ? "Welcome Back" : "Create Account"}
+                        {isLoginPage ? t("Welcome Back") : t("Create Account")}
                     </h1>
                     <p className="text-sm text-gray-600 dark:text-gray-300 max-w-xs">
                         {isLoginPage
-                            ? "Sign in to your account and access your dashboard easily."
-                            : "Sign up now to get started with your personal dashboard."}
+                            ? t(
+                                  "Sign in to your account and access your dashboard easily."
+                              )
+                            : t(
+                                  "Sign up now to get started with your personal dashboard."
+                              )}
                     </p>
                 </div>
 
@@ -81,6 +92,10 @@ export default function GuestLayout({ children }) {
                     © {new Date().getFullYear()} Your Company. All rights
                     reserved.
                 </p>
+
+                <div className="lg:hidden sm:block mt-2">
+                    <LanguageSwitcher />
+                </div>
             </div>
         </div>
     );

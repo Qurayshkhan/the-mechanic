@@ -59,7 +59,11 @@ const Basic = ({ role }) => {
                 </div>
 
                 <div className="flex items-center justify-end py-2">
-                    <PrimaryButton type="submit" disabled={processing}>
+                    <PrimaryButton
+                        type="submit"
+                        processing={processing}
+                        disabled={processing}
+                    >
                         {processing && <Spinner />}
                         {t("Update")}
                     </PrimaryButton>

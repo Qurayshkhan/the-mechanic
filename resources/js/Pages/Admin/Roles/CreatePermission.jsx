@@ -174,7 +174,11 @@ const CreatePermission = () => {
                             >
                                 Cancel
                             </button>
-                            <PrimaryButton type="submit" disabled={processing}>
+                            <PrimaryButton
+                                type="submit"
+                                processing={processing}
+                                disabled={processing}
+                            >
                                 {processing
                                     ? "Creating..."
                                     : "Create Permission"}

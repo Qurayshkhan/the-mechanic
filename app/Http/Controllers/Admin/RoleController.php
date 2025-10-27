@@ -62,7 +62,7 @@ class RoleController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return Redirect::route('admin.roles')
-                ->withErrors(['message', $e->getMessage()]);
+                ->withErrors(['message' => $e->getMessage()]);
         }
     }
 

@@ -1,11 +1,14 @@
+import AuthTitle from "@/Components/AuthTitle";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import useLang from "@/hooks/useLang";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Register() {
+    const { t } = useLang();
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
@@ -26,10 +29,12 @@ export default function Register() {
             <Head title="Register" />
 
             <form onSubmit={submit}>
-                <h1 className="text-2xl text-center font-bold">Signup</h1>
-                <p className="text-sm text-gray-500 text-center mt-2">
-                    Join us today and start managing your account with ease.
-                </p>
+                <AuthTitle
+                    title={"Signup"}
+                    subTitle={
+                        "Join us today and start managing your account with ease."
+                    }
+                />
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -111,11 +116,11 @@ export default function Register() {
                         href={route("login")}
                         className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                     >
-                        Already registered?
+                        {t("Already registered?")}
                     </Link>
 
                     <PrimaryButton className="ms-4" processing={processing}>
-                        Register
+                        {t("Register")}
                     </PrimaryButton>
                 </div>
             </form>

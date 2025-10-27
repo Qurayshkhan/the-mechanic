@@ -4,14 +4,16 @@ import PageHeading from "@/Components/PageHeading";
 import { can } from "@/helpers";
 import useAuth from "@/hooks/useAuth";
 import MasterLayout from "@/Layouts/MasterLayout";
-import { Head, Link, useRemember } from "@inertiajs/react";
+import { Head, Link, router, useRemember } from "@inertiajs/react";
 import { Edit } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Delete from "./Delete";
 import { Deferred } from "@inertiajs/react";
 import useLang from "@/hooks/useLang";
+import Pagination from "@/Components/Pagination";
+import ReportFilters from "./ReportFilters";
 
-const Report = ({ users }) => {
+const Report = ({ users, filters }) => {
     const { t } = useLang();
     const userAuth = useAuth();
 
@@ -26,6 +28,9 @@ const Report = ({ users }) => {
                     isCreateBtn={true}
                     btnName={"New User"}
                 />
+                {/* <Card>
+                    <ReportFilters filters={filters} />
+                </Card> */}
                 <Deferred data={["users"]} fallback={<Loading title="users" />}>
                     <Card>
                         <div className="overflow-x-auto">
@@ -39,6 +44,9 @@ const Report = ({ users }) => {
                                             {t("Email")}
                                         </th>
                                         <th className="border py-2 px-3 uppercase">
+                                            {t("Phone")}
+                                        </th>
+                                        <th className="border py-2 px-3 uppercase">
                                             {t("Role")}
                                         </th>
                                         <th className="border py-2 px-3 uppercase">
@@ -48,12 +56,15 @@ const Report = ({ users }) => {
                                 </thead>
                                 <tbody>
                                     {users?.data?.map((user) => (
-                                        <tr key={user.id}>
+                                        <tr key={user?.id}>
                                             <td className="border py-2 px-3">
-                                                {user.name ?? "N/A"}
+                                                {user?.name ?? "N/A"}
                                             </td>
                                             <td className="border py-2 px-3">
-                                                {user.email ?? "N/A"}
+                                                {user?.email ?? "N/A"}
+                                            </td>
+                                            <td className="border py-2 px-3">
+                                                {user?.phone_no ?? "N/A"}
                                             </td>
                                             <td className="border py-2 px-3">
                                                 {user.roles
@@ -89,6 +100,14 @@ const Report = ({ users }) => {
                                     ))}
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="flex justify-center md:justify-end">
+                            <Pagination
+                                links={users?.links}
+                                from={users?.from}
+                                to={users?.to}
+                                total={users?.total}
+                            />
                         </div>
                     </Card>
                 </Deferred>

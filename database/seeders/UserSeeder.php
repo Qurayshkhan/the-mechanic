@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
         $mechanicPermission = Permission::firstOrCreate(['name' => 'mechanic']);
         $customerPermission = Permission::firstOrCreate(['name' => 'customer']);
 
-        $permissions = ['view_dashboard', 'view_profile', 'view_role_and_permission', 'create_role', 'edit_role', 'delete_role', 'view_permissions', 'edit_permissions', 'view_users', 'create_user', 'edit_user', 'delete_user'];
+        $permissions = ['view_dashboard', 'view_profile', 'view_role_and_permission', 'create_role', 'edit_role', 'update_role', 'delete_role', 'view_permissions', 'edit_permissions', 'view_users', 'create_user', 'edit_user', 'update_role', 'delete_user'];
 
 
         foreach ($permissions as $permission) {

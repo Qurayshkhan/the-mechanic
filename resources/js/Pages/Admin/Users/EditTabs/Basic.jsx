@@ -111,8 +111,11 @@ const Basic = ({ user, roles }) => {
                     </div>
 
                     <div className="flex justify-end items-center my-2">
-                        <PrimaryButton type="submit" disabled={processing}>
-                            {processing && <Spinner className="mr-2" />}
+                        <PrimaryButton
+                            type="submit"
+                            processing={processing}
+                            disabled={processing}
+                        >
                             {t("Update")}
                         </PrimaryButton>
                     </div>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Traits;
+use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 
 trait PermissionTrait
@@ -15,6 +16,20 @@ trait PermissionTrait
         }
 
         return true;
+    }
+
+    public function checkRoleType($role)
+    {
+        switch ($role) {
+            case 'admin':
+                return User::ADMIN_USER;
+            case 'mechanic':
+                return User::MECHANIC_USER;
+            case 'customer':
+                return User::CUSTOMER_USER;
+            default:
+                return null;
+        }
     }
 
 }
