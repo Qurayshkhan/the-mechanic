@@ -28,9 +28,9 @@ const Report = ({ users, filters }) => {
                     isCreateBtn={true}
                     btnName={"New User"}
                 />
-                {/* <Card>
+                <Card>
                     <ReportFilters filters={filters} />
-                </Card> */}
+                </Card>
                 <Deferred data={["users"]} fallback={<Loading title="users" />}>
                     <Card>
                         <div className="overflow-x-auto">

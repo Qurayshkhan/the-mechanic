@@ -6,20 +6,20 @@ import React, { useEffect, useRef, useState } from "react";
 const ReportFilters = ({ filters }) => {
     const [search, setSearch] = useState(filters?.search || "");
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            router.get(
-                route("admin.users"),
-                { search },
-                {
-                    preserveState: true,
-                    replace: true,
-                }
-            );
-        }, 400);
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearch(value);
 
-        return () => clearTimeout(timeout);
-    }, [search]);
+        router.get(
+            route("admin.users"),
+            { search: value },
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    };
+
     return (
         <>
             <div className="py-4">
@@ -28,7 +28,9 @@ const ReportFilters = ({ filters }) => {
                         <InputLabel value="Search" />
                         <TextInput
                             placeholder="Enter name email phone"
-                            onChange={(e) => setSearch(e.target.value)}
+                            name="search"
+                            value={search}
+                            onChange={handleSearch}
                         />
                     </div>
                 </div>

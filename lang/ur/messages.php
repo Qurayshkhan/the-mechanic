@@ -77,6 +77,7 @@ return [
     "Email Password Reset Link" => "ای میل پاس ورڈ ری سیٹ لنک",
     "Reset Password" => "پاس ورڈ ری سیٹ کریں۔",
     "Enter your new password below to securely regain access to your account." => "اپنے اکاؤنٹ تک محفوظ طریقے سے دوبارہ رسائی حاصل کرنے کے لیے نیچے اپنا نیا پاس ورڈ درج کریں۔",
-    "Search" => "تلاش کریں۔"
+    "Search" => "تلاش کریں۔",
+    "Enter name email phone" => 'نام ای میل فون درج کریں۔'
 
 ];

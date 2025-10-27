@@ -37,7 +37,7 @@ const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
                         {pageTitle}
                     </h1>
                     <p className="text-sm text-gray-500 hidden sm:block">
-                        {t("Welcome back")}, {user.name}
+                        {t("Welcome Back")}, {user.name}
                     </p>
                 </div>
             </div>
