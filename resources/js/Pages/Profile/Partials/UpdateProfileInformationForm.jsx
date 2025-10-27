@@ -2,6 +2,7 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import useLang from "@/hooks/useLang";
 import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 
@@ -10,6 +11,7 @@ export default function UpdateProfileInformation({
     status,
     className = "",
 }) {
+    const { t } = useLang();
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
@@ -28,11 +30,13 @@ export default function UpdateProfileInformation({
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">
-                    Profile Information
+                    {t("Profile Information")}
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
+                    {t(
+                        "Update your account's profile information and email address."
+                    )}
                 </p>
             </header>
 
@@ -93,7 +97,9 @@ export default function UpdateProfileInformation({
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <PrimaryButton processing={processing}>
+                        {t("Save")}
+                    </PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -102,7 +108,7 @@ export default function UpdateProfileInformation({
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">Saved.</p>
+                        <p className="text-sm text-gray-600">{t("Saved")}.</p>
                     </Transition>
                 </div>
             </form>

@@ -78,6 +78,20 @@ return [
     "Reset Password" => "پاس ورڈ ری سیٹ کریں۔",
     "Enter your new password below to securely regain access to your account." => "اپنے اکاؤنٹ تک محفوظ طریقے سے دوبارہ رسائی حاصل کرنے کے لیے نیچے اپنا نیا پاس ورڈ درج کریں۔",
     "Search" => "تلاش کریں۔",
-    "Enter name email phone" => 'نام ای میل فون درج کریں۔'
+    "Enter name email phone" => 'نام ای میل فون درج کریں۔',
+    "Profile" => 'پروفائل',
+    "Manage your personal information and account settings" => "اپنی ذاتی معلومات اور اکاؤنٹ کی ترتیبات کا نظم کریں۔",
+    "Profile Information" => 'پروفائل کی معلومات',
+    "Update your account's profile information and email address." => "اپنے اکاؤنٹ کی پروفائل کی معلومات اور ای میل ایڈریس کو اپ ڈیٹ کریں۔",
+    "Update Password" => "پاس ورڈ اپ ڈیٹ کریں۔",
+    "Ensure your account is using a long, random password to stay secure." => "یقینی بنائیں کہ آپ کا اکاؤنٹ محفوظ رہنے کے لیے ایک لمبا، بے ترتیب پاس ورڈ استعمال کر رہا ہے۔",
+    "Delete Account" => "اکاؤنٹ حذف کریں۔",
+    "account_delete_desc" => "آپ کا اکاؤنٹ حذف ہونے کے بعد، اس کے تمام وسائل اور ڈیٹا مستقل طور پر حذف ہو جائیں گے۔ اپنا اکاؤنٹ حذف کرنے سے پہلے، براہ کرم کوئی بھی ڈیٹا یا معلومات ڈاؤن لوڈ کریں جسے آپ برقرار رکھنا چاہتے ہیں۔",
+    "Current Password" => 'موجودہ پاس ورڈ',
+    "New Password" => "نیا پاس ورڈ",
+    "Save" => "محفوظ کریں۔",
+    "Saved" => "محفوظ کیا گیا۔",
+    "Logout" => 'لاگ آؤٹ',
+
 
 ];
