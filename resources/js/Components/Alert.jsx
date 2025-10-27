@@ -53,8 +53,8 @@ const Alert = ({ pageProps }) => {
                                 onClick={closeAlert}
                                 type="button"
                                 className="ms-auto -mx-1.5 -my-1.5 bg-gray-50 text-gray-500 rounded-lg
-                focus:ring-2 focus:ring-gray-400 p-1.5 hover:bg-gray-200
-                inline-flex items-center justify-center h-8 w-8"
+                                            focus:ring-2 focus:ring-gray-400 p-1.5 hover:bg-gray-200
+                                            inline-flex items-center justify-center h-8 w-8"
                                 aria-label="Close"
                             >
                                 <svg

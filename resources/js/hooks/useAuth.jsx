@@ -1,5 +1,4 @@
 import { usePage } from "@inertiajs/react";
-import React from "react";
 
 function useAuth() {
     const { auth } = usePage().props;
