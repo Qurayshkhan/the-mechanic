@@ -13,14 +13,17 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('avatar')->default('assets/images/avatar/default.png');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone_no')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('type', [1, 2, 3])
-                ->comment('1 = Admin, 2 = Mechanic, 3 = Customer')
+                ->comment('1 = Admin, 2 = Mechanic, 3 = Customer, 4 = Vendor')
                 ->default(User::CUSTOMER_USER);
+            $table->tinyInteger('status')->default(User::STATUS_ACTIVE)->comment('1 = ACTIVE, 2 = INACTIVE, 3 = BLOCKED');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -18,7 +18,7 @@ class UserRepository implements UserInterface
     public function users($request): LengthAwarePaginator
     {
         $query = $this->user->query();
-        return $query->notAdmin()->select('id', 'name', 'email', 'phone_no')
+        return $query->notAdmin()->select('id', 'name', 'email', 'phone_no', 'avatar')
             ->when($request->input('search'), function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->whereLike('name', '%' . $search . '%')
