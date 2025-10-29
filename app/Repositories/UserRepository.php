@@ -32,35 +32,12 @@ class UserRepository implements UserInterface
 
     public function create(array $data): User
     {
-        $data['password'] = Hash::make($data['password']);
-        $user = $this->user->create($data);
-
-        if (!empty($data['role'])) {
-            $user->assignRole($data['role']);
-        }
-
-
-        return $user;
+        return $this->user->create($data);
     }
 
     public function update(User $user, array $data): User
     {
-        $updateData = [
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone_no' => $data['phone_no'] ?? null,
-        ];
-
-        if (!empty($data['password'])) {
-            $updateData['password'] = Hash::make($data['password']);
-        }
-
-        $user->update($updateData);
-
-        if (!empty($data['role'])) {
-            $user->syncRoles([$data['role']]);
-        }
-
+        $user->update($data);
         return $user;
     }
 

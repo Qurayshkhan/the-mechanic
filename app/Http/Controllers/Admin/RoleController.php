@@ -5,41 +5,39 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleStoreRequest;
 use App\Http\Requests\UpdateRoleRequest;
-use App\Repositories\PermissionRepository;
-use App\Repositories\RoleRepository;
-use App\Traits\PermissionTrait;
+use App\Services\PermissionService;
+use App\Services\RoleService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Redirect;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class RoleController extends Controller
 {
-    use PermissionTrait;
-    protected $roleRepository, $permissionRepository;
+    use AuthorizesRequests;
+    protected $roleService, $permissionService;
 
-    public function __construct(RoleRepository $roleRepository, PermissionRepository $permissionRepository)
+    public function __construct(RoleService $roleService, PermissionService $permissionService)
     {
-        $this->roleRepository = $roleRepository;
-        $this->permissionRepository = $permissionRepository;
+        $this->roleService = $roleService;
+        $this->permissionService = $permissionService;
     }
 
     public function index(Request $request)
     {
-        $this->isPermissionExists('view_role_and_permission');
+        $this->authorize('viewAny', Role::class);
         return Inertia::render('Admin/Roles/Report', [
-            'roles' => Inertia::defer(fn() => $this->roleRepository->getRoles($request)),
+            'roles' => Inertia::defer(fn() => $this->roleService->getRoles($request)),
         ]);
     }
 
 
     public function create()
     {
-        $this->isPermissionExists('create_role');
-        $permissions = $this->permissionRepository->permissions();
+        $this->authorize('create', Role::class);
         return Inertia::render('Admin/Roles/Create', [
-            'permissions' => $permissions,
+            'permissions' => $this->permissionService->getAllPermissions(),
         ]);
     }
 
@@ -48,13 +46,7 @@ class RoleController extends Controller
     {
         try {
             DB::beginTransaction();
-
-            $role = $this->roleRepository->create($request->only('name', 'guard_name'));
-            if ($request->has('permissions')) {
-                $permissions = $this->permissionRepository->getPermissionsByIds($request->permissions);
-                $role->syncPermissions($permissions);
-            }
-
+            $this->roleService->createRole($request->all());
             DB::commit();
             return Redirect::route('admin.roles')
                 ->with(['alert' => 'Role created successfully.']);
@@ -68,7 +60,7 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        $this->isPermissionExists('edit_role');
+        $this->authorize('edit', $role);
         $role->load('permissions');
 
         return Inertia::render('Admin/Roles/EditTabs/Basic', [
@@ -81,7 +73,7 @@ class RoleController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->roleRepository->update($role, $request->validated());
+            $this->roleService->updateRole($role, $request->validated());
             DB::commit();
 
             return Redirect::route('admin.roles')
@@ -95,13 +87,10 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        $this->isPermissionExists('delete_role');
+        $this->authorize('delete', $role);
         try {
             DB::beginTransaction();
-            if ($role->users()->count() > 0) {
-                return back()->with('error', 'Cannot delete role. It is assigned to ' . $role->users()->count() . ' user(s).');
-            }
-            $this->roleRepository->destroy($role);
+            $this->roleService->deleteRole($role);
             DB::commit();
             return Redirect::route('admin.roles')
                 ->with(['alert' => 'Role deleted successfully.']);

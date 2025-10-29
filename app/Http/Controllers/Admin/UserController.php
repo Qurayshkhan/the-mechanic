@@ -3,59 +3,53 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
+use App\Services\RoleService;
+use App\Services\UserService;
 use App\Traits\PermissionTrait;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Repositories\RoleRepository;
 use Redirect;
 
 class UserController extends Controller
 {
-    use PermissionTrait;
-    protected $userRepository, $roleRepository;
+    use AuthorizesRequests, PermissionTrait;
+    protected $roleRepository;
+    protected $userService, $roleService;
 
-    public function __construct(UserRepository $userRepository, RoleRepository $roleRepository)
+    public function __construct(UserService $userService, RoleService $roleService)
     {
-        $this->userRepository = $userRepository;
-        $this->roleRepository = $roleRepository;
+        $this->userService = $userService;
+        $this->roleService = $roleService;
     }
     public function index(Request $request)
     {
-        $this->isPermissionExists('view_users');
+        $this->authorize('viewAny', User::class);
         return Inertia::render('Admin/Users/Report', [
-            'users' => Inertia::defer(fn() => $this->userRepository->users($request)),
+            'users' => Inertia::defer(fn() => $this->userService->getUsers($request)),
             'filters' => ['search' => $request->input('search', null)],
         ]);
     }
 
     public function create()
     {
-        $this->isPermissionExists('create_user');
-        $roles = $this->roleRepository->roles();
+        $this->authorize('create', User::class);
         return Inertia::render('Admin/Users/Create', [
-            'roles' => $roles,
+            'roles' => $this->roleService->getAllRoles(),
         ]);
     }
 
     public function store(UserStoreRequest $request)
     {
-        $data = $request->validated();
-
+        $this->authorize('store', User::class);
         try {
             DB::beginTransaction();
-            $data['type'] = $data['role'] ? $this->checkRoleType($data['role']) : User::CUSTOMER_USER;
-            $data['email_verified_at'] = now();
-
-            $this->userRepository->create($data);
-
+            $this->userService->createUser($request->validated());
             DB::commit();
-
             return Redirect::route('admin.users')
                 ->with(['alert' => 'User created successfully.']);
         } catch (\Exception $e) {
@@ -67,22 +61,19 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $this->isPermissionExists('edit_user');
+        $this->authorize('edit', User::class);
         return Inertia::render('Admin/Users/EditTabs/Basic', [
             'user' => $user->load('roles'),
-            'roles' => $this->roleRepository->roles(),
+            'roles' => $this->roleService->getAllRoles(),
         ]);
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        $validated = $request->validated();
-
+        $this->authorize('update', $user);
         try {
             DB::beginTransaction();
-
-            $this->userRepository->update($user, $validated);
-
+            $this->userService->updateUser($user, $request->validated());
             DB::commit();
             return Redirect::route('admin.users')->with('alert', 'User updated successfully.');
         } catch (\Exception $e) {
@@ -94,9 +85,9 @@ class UserController extends Controller
     public function delete(User $user)
     {
         try {
+            $this->authorize('delete', $user);
             DB::beginTransaction();
-            $this->isPermissionExists('delete_user');
-            $this->userRepository->destroy($user);
+            $this->userService->userDelete($user);
             DB::commit();
             return Redirect::route('admin.users')->with('alert', 'User deleted successfully.');
         } catch (\Exception $e) {

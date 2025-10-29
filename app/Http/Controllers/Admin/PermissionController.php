@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\PermissionRepository;
+use App\Services\PermissionService;
 use App\Traits\PermissionTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -14,11 +14,11 @@ class PermissionController extends Controller
 {
     use PermissionTrait;
 
-    protected $permissionRepository;
+    protected $permissionService;
 
-    public function __construct(PermissionRepository $permissionRepository)
+    public function __construct(PermissionService $permissionService)
     {
-        $this->permissionRepository = $permissionRepository;
+        $this->permissionService = $permissionService;
     }
 
     public function editPermission(Role $role)
@@ -27,18 +27,14 @@ class PermissionController extends Controller
         $role->load('permissions');
         return Inertia::render('Admin/Roles/EditTabs/Permissions', [
             'role' => $role,
-            'permissions' => $this->permissionRepository->permissions(),
+            'permissions' => $this->permissionService->getAllPermissions(),
         ]);
     }
 
     public function updatePermission(Request $request, Role $role)
     {
         try {
-            $permissions = $request->permissions instanceof Collection
-                ? $request->permissions->pluck('id')->toArray()
-                : $request->permissions;
-
-            $this->permissionRepository->updatePermissions($role, $permissions);
+            $this->permissionService->updatePermissions($role, $request->all());
             return Redirect::route('admin.roles')
                 ->with(['alert' => "Permissions updated successfully."]);
         } catch (\Exception $e) {

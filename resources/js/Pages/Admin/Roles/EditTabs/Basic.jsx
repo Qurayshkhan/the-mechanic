@@ -4,7 +4,6 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Head, useForm } from "@inertiajs/react";
-import Spinner from "@/Components/Spinner";
 import InputError from "@/Components/InputError";
 import useLang from "@/hooks/useLang";
 
@@ -59,12 +58,7 @@ const Basic = ({ role }) => {
                 </div>
 
                 <div className="flex items-center justify-end py-2">
-                    <PrimaryButton
-                        type="submit"
-                        processing={processing}
-                        disabled={processing}
-                    >
-                        {processing && <Spinner />}
+                    <PrimaryButton type="submit" processing={processing}>
                         {t("Update")}
                     </PrimaryButton>
                 </div>

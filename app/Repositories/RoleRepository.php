@@ -17,6 +17,10 @@ class RoleRepository implements RoleInterface
         $this->permission = $permission;
     }
 
+    public function all(): Collection
+    {
+        return $this->role->get();
+    }
     public function getRoles($request): LengthAwarePaginator
     {
         $query = $this->role->query()->with('permissions');
@@ -41,8 +45,5 @@ class RoleRepository implements RoleInterface
         return $role->delete();
     }
 
-    public function roles()
-    {
-        return Role::all();
-    }
+
 }

@@ -13,7 +13,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissions = ['admin', 'mechanic', 'customer', 'vendor', 'view_dashboard', 'view_profile', 'view_role_and_permission', 'create_role', 'edit_role', 'update_role', 'delete_role', 'view_permissions', 'edit_permissions', 'view_users', 'create_user', 'edit_user', 'update_role', 'delete_user'];
+        $permissions = ['admin', 'mechanic', 'customer', 'vendor', 'view_dashboard', 'view_profile', 'view_role_and_permission', 'create_role', 'store_role', 'edit_role', 'update_role', 'delete_role', 'view_permissions', 'edit_permissions', 'view_users', 'create_user', 'store_user', 'edit_user', 'update_user', 'delete_user'];
 
 
         foreach ($permissions as $permission) {
