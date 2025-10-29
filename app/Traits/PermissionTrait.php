@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 use App\Models\User;
+use App\UserType;
 use Illuminate\Auth\Access\AuthorizationException;
 
 trait PermissionTrait
@@ -22,14 +23,13 @@ trait PermissionTrait
     {
         switch ($role) {
             case 'admin':
-                return User::ADMIN_USER;
+                return UserType::ADMIN;
             case 'mechanic':
-                return User::MECHANIC_USER;
+                return UserType::MECHANIC;
             case 'customer':
-                return User::CUSTOMER_USER;
+                return UserType::CUSTOMER;
             default:
                 return null;
         }
     }
-
 }

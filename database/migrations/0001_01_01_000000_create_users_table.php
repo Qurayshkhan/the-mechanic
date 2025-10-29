@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\User;
+use App\Status;
+use App\UserType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,8 +22,8 @@ return new class extends Migration {
             $table->string('password');
             $table->enum('type', [1, 2, 3])
                 ->comment('1 = Admin, 2 = Mechanic, 3 = Customer, 4 = Vendor')
-                ->default(User::CUSTOMER_USER);
-            $table->tinyInteger('status')->default(User::STATUS_ACTIVE)->comment('1 = ACTIVE, 2 = INACTIVE, 3 = BLOCKED');
+                ->default(UserType::CUSTOMER);
+            $table->tinyInteger('status')->default(Status::STATUS_ACTIVE)->comment('1 = ACTIVE, 2 = INACTIVE, 3 = BLOCKED');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,16 +15,9 @@ class User extends Authenticatable implements MustVerifyEmail
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, SoftDeletes;
 
-    const ADMIN_USER = 1;
-    const MECHANIC_USER = 2;
-    const CUSTOMER_USER = 3;
-    const VENDOR_USER = 3;
-
     const ADMIN_ROLE = "Admin";
 
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 2;
-    const STATUS_BLOCKED = 3;
+
 
     /**
      * The attributes that are mass assignable.

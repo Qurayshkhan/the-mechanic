@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\UserType;
 use Carbon\Carbon;
 use Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -45,7 +46,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'password' => Hash::make('admin123'),
-                'type' => User::ADMIN_USER,
+                'type' => UserType::ADMIN,
                 'email_verified_at' => Carbon::now(),
             ]
         );
@@ -57,7 +58,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Mechanic',
                 'password' => Hash::make('mechanic123'),
-                'type' => User::MECHANIC_USER,
+                'type' => UserType::MECHANIC,
                 'email_verified_at' => Carbon::now(),
             ]
         );
@@ -69,7 +70,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Customer',
                 'password' => Hash::make('customer123'),
-                'type' => User::CUSTOMER_USER,
+                'type' => UserType::CUSTOMER,
                 'email_verified_at' => Carbon::now(),
             ]
         );
