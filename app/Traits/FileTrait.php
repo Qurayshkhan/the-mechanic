@@ -17,7 +17,7 @@ trait FileTrait
      * @param bool $useOriginalName    Whether to use the original file name or generate unique one
      * @return string|null             The stored file path or null on failure
      */
-    public function saveFile(UploadedFile $file, string $directory, ?string $disk = null, bool $useOriginalName = false): ?string
+    public function saveFile(UploadedFile $file, string $directory, bool $useOriginalName = false, ?string $disk = null): ?string
     {
         try {
             $disk = $disk ?? config('filesystems.default');

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\UserType;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Traits\PermissionTrait;
@@ -25,7 +26,7 @@ class UserService
 
     public function createUser($data): User
     {
-        $data['type'] = $data['role'] ? $this->checkRoleType($data['role']) : User::CUSTOMER_USER;
+        $data['type'] = $data['role'] ? $this->checkRoleType($data['role']) : UserType::CUSTOMER;
         $data['email_verified_at'] = now();
         $data['password'] = Hash::make($data['password']);
         $user = $this->userRepository->create($data);

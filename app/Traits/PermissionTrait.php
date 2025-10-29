@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 use App\Models\User;
-use App\UserType;
+use App\Enums\UserType;
 use Illuminate\Auth\Access\AuthorizationException;
 
 trait PermissionTrait

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\UserType;
+use App\Enums\UserType;
 use Carbon\Carbon;
 use Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
