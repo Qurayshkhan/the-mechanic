@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Services\UserService;
+use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
@@ -67,8 +69,26 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function uploadAvatar()
+    public function uploadAvatar(Request $request)
     {
+        try {
+            $this->userService->uploadAvatar(Auth::id(), $request?->file('avatar'));
+            return Redirect::back()->with(['alert' => "Avatar uploaded successfully."]);
+        } catch (Exception $e) {
+            return Redirect::back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
 
+    public function removeAvatar(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $this->userService->removeAvatar(Auth::id());
+            DB::commit();
+            return Redirect::back()->with(['alert' => "Avatar removed successfully."]);
+        } catch (Exception $e) {
+            DB::rollback();
+            return Redirect::back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 }

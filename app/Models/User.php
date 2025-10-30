@@ -25,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var list<string>
      */
     protected $fillable = [
+        'avatar',
         'name',
         'email',
         'password',
@@ -67,8 +68,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function avatar(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $value
-            ? asset(ltrim($value, '/'))
+            get: fn($value) => $value != "assets/images/avatar/default.png"
+            ? asset(ltrim('/storage/' . $value, '/'))
             : asset('assets/images/avatar/default.png')
         );
     }

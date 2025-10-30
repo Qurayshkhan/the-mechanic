@@ -4,8 +4,11 @@ import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationFor
 import MasterLayout from "@/Layouts/MasterLayout";
 import PageHeading from "@/Components/PageHeading";
 import UploadAvatarForm from "./Partials/UploadAvatarForm";
+import { can } from "@/helpers";
+import useAuth from "@/hooks/useAuth";
 
 export default function Edit({ mustVerifyEmail, status }) {
+    const user = useAuth();
     return (
         <MasterLayout pageTitle="Profile">
             <PageHeading
@@ -30,9 +33,11 @@ export default function Edit({ mustVerifyEmail, status }) {
                         <UpdatePasswordForm className="max-w-xl" />
                     </div>
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>
+                    {can(user, "delete_account") && (
+                        <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+                            <DeleteUserForm className="max-w-xl" />
+                        </div>
+                    )}
                 </div>
             </div>
         </MasterLayout>

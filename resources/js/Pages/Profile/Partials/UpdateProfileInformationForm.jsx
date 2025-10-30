@@ -2,6 +2,8 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import { can } from "@/helpers";
+import useAuth from "@/hooks/useAuth";
 import useLang from "@/hooks/useLang";
 import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
@@ -12,7 +14,7 @@ export default function UpdateProfileInformation({
     className = "",
 }) {
     const { t } = useLang();
-    const user = usePage().props.auth.user;
+    const user = useAuth();
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
@@ -97,10 +99,11 @@ export default function UpdateProfileInformation({
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton processing={processing}>
-                        {t("Save")}
-                    </PrimaryButton>
-
+                    {can(user, "edit_profile_information") && (
+                        <PrimaryButton processing={processing}>
+                            {t("Save")}
+                        </PrimaryButton>
+                    )}
                     <Transition
                         show={recentlySuccessful}
                         enter="transition ease-in-out"

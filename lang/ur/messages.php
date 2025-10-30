@@ -93,5 +93,14 @@ return [
     "Saved" => "محفوظ کیا گیا۔",
     "Logout" => 'لاگ آؤٹ',
 
-
+    // Avatar / Profile Photo
+    'Profile Photo' => 'پروفائل تصویر',
+    'Upload a clear profile picture to personalize your account.' => 'اپنے اکاؤنٹ کو ذاتی نوعیت دینے کے لیے ایک واضح پروفائل تصویر اپ لوڈ کریں۔',
+    'You can choose an image...' => 'آپ ایک تصویر منتخب کر سکتے ہیں...',
+    'Click to upload.' => 'اپ لوڈ کرنے کے لیے کلک کریں۔',
+    'Remove avatar' => 'تصویر ہٹا دیں',
+    'Uploading...' => 'اپ لوڈ ہو رہا ہے...',
+    'Loading...' => 'لوڈ ہو رہا ہے...',
+    'Recommended: square image, at least 300x300px.' => 'سفارش: مربع تصویر، کم از کم 300x300 پکسل۔',
+    'Supported formats: PNG, JPG, JPEG, WEBP (max 2MB).' => 'معاون فارمیٹس: PNG، JPG، JPEG، WEBP (زیادہ سے زیادہ 2MB)۔',
 ];

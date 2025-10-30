@@ -2,16 +2,18 @@
 
 namespace App\Services;
 
+use App\Enums\Defaults;
 use App\Enums\UserType;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Traits\FileTrait;
 use App\Traits\PermissionTrait;
 use Hash;
 use Illuminate\Http\Request;
 
 class UserService
 {
-    use PermissionTrait;
+    use PermissionTrait, FileTrait;
     protected $userRepository;
 
     public function __construct(UserRepository $userRepository)
@@ -55,5 +57,24 @@ class UserService
     public function userDelete(User $user): bool
     {
         return $this->userRepository->destroy($user);
+    }
+
+
+
+    public function uploadAvatar($userId, $avatar)
+    {
+        $user = $this->userRepository->getUserById($userId);
+        $directory = 'uploads/users/' . $userId;
+        $avatar = $this->saveFile($avatar, $directory);
+        $this->userRepository->update($user, ['avatar' => $avatar]);
+    }
+
+    public function removeAvatar($userId): void
+    {
+        $user = $this->userRepository->getUserById($userId);
+        if ($user && $user->avatar) {
+            $this->deleteFile($user->avatar);
+            $this->userRepository->update($user, ['avatar' => Defaults::DEFAULT_AVATAR]);
+        }
     }
 }

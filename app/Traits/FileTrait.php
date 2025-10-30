@@ -8,16 +8,8 @@ use Illuminate\Support\Str;
 
 trait FileTrait
 {
-    /**
-     * Save any uploaded file (image, PDF, document, etc.)
-     *
-     * @param UploadedFile $file       The uploaded file instance
-     * @param string $directory        Directory path (e.g. 'users/1' or 'invoices')
-     * @param string|null $disk        Filesystem disk (default: config('filesystems.default'))
-     * @param bool $useOriginalName    Whether to use the original file name or generate unique one
-     * @return string|null             The stored file path or null on failure
-     */
-    public function saveFile(UploadedFile $file, string $directory, bool $useOriginalName = false, ?string $disk = null): ?string
+
+    public function saveFile(UploadedFile $file, string $directory, bool $useOriginalName = false, ?string $disk = 'public'): ?string
     {
         try {
             $disk = $disk ?? config('filesystems.default');
@@ -38,13 +30,7 @@ trait FileTrait
         }
     }
 
-    /**
-     * Delete a file safely from storage.
-     *
-     * @param string|null $path
-     * @param string|null $disk
-     * @return bool
-     */
+
     public function deleteFile(?string $path, ?string $disk = null): bool
     {
         if (!$path)
@@ -63,13 +49,6 @@ trait FileTrait
         return false;
     }
 
-    /**
-     * Get full public URL for a stored file.
-     *
-     * @param string|null $path
-     * @param string|null $disk
-     * @return string|null
-     */
     public function getFileUrl(?string $path, ?string $disk = null): ?string
     {
         if (!$path)

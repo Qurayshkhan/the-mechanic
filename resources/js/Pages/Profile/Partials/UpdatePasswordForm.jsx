@@ -2,6 +2,8 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import { can } from "@/helpers";
+import useAuth from "@/hooks/useAuth";
 import useLang from "@/hooks/useLang";
 import { Transition } from "@headlessui/react";
 import { useForm } from "@inertiajs/react";
@@ -11,6 +13,7 @@ export default function UpdatePasswordForm({ className = "" }) {
     const passwordInput = useRef();
     const currentPasswordInput = useRef();
     const { t } = useLang();
+    const user = useAuth();
 
     const {
         data,
@@ -125,9 +128,11 @@ export default function UpdatePasswordForm({ className = "" }) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton processing={processing}>
-                        {t("Save")}
-                    </PrimaryButton>
+                    {can(user, "update_profile_password") && (
+                        <PrimaryButton processing={processing}>
+                            {t("Save")}
+                        </PrimaryButton>
+                    )}
 
                     <Transition
                         show={recentlySuccessful}

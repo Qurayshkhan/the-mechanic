@@ -6,6 +6,7 @@ import Dropdown from "@/Components/Dropdown";
 import useLang from "@/hooks/useLang";
 import useAuth from "@/hooks/useAuth";
 import { Power, User } from "lucide-react";
+import { can } from "@/helpers/index";
 
 const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
     const user = useAuth();
@@ -49,11 +50,20 @@ const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
                     <Dropdown>
                         <Dropdown.Trigger>
                             <button className="flex gap-2 items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300">
-                                <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-                                    <span className="text-white text-sm font-medium">
-                                        {user.name.charAt(0).toUpperCase()}
-                                    </span>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden">
+                                    {user.avatar ? (
+                                        <img
+                                            src={user.avatar}
+                                            alt={user.name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    ) : (
+                                        <span className="text-white text-sm font-medium">
+                                            {user.name?.charAt(0).toUpperCase()}
+                                        </span>
+                                    )}
                                 </div>
+
                                 <div className="hidden sm:block text-left">
                                     <p className="text-sm font-medium text-gray-900">
                                         {user.name}
@@ -79,14 +89,15 @@ const Navbar = ({ onMenuToggle, pageTitle = "Dashboard" }) => {
                         </Dropdown.Trigger>
 
                         <Dropdown.Content>
-                            <Dropdown.Link
-                                href={route("profile.edit")}
-                                className="flex gap-2 items-center space-x-2"
-                            >
-                                <User className="w-4 h-4" />
-                                <span>{t("Profile")}</span>
-                            </Dropdown.Link>
-
+                            {can(user, "view_profile") && (
+                                <Dropdown.Link
+                                    href={route("profile.edit")}
+                                    className="flex gap-2 items-center space-x-2"
+                                >
+                                    <User className="w-4 h-4" />
+                                    <span>{t("Profile")}</span>
+                                </Dropdown.Link>
+                            )}{" "}
                             <div className="border-t border-gray-200"></div>
                             <Dropdown.Link
                                 href={route("logout")}
