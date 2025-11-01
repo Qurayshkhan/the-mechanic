@@ -17,9 +17,13 @@ class RoleRepository implements RoleInterface
         $this->permission = $permission;
     }
 
-    public function all(): Collection
+    public function all($isAdmin = false): Collection
     {
-        return $this->role->get();
+        $query = $this->role->query();
+        if ($isAdmin == false) {
+            $query->where('name', '!=', 'admin')->get();
+        }
+        return $query->get();
     }
     public function getRoles($request): LengthAwarePaginator
     {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendVerificationEmailJob;
 use App\Models\User;
+use App\Services\RoleService;
+use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,12 +18,19 @@ use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
+    protected $roleService, $userService;
+
+    public function __construct(RoleService $roleService, UserService $userService)
+    {
+        $this->roleService = $roleService;
+        $this->userService = $userService;
+    }
     /**
      * Display the registration view.
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/Register', ['roles' => $this->roleService->getAllRoles()]);
     }
 
     /**
@@ -35,13 +44,10 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => 'required',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = $this->userService->createUser($request->all());
 
         SendVerificationEmailJob::dispatch($user)->delay(now()->addSeconds(5));
 

@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('phone_no')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('type', [1, 2, 3])
+            $table->enum('type', [1, 2, 3, 4])
                 ->comment('1 = Admin, 2 = Mechanic, 3 = Customer, 4 = Vendor')
                 ->default(UserType::CUSTOMER);
             $table->tinyInteger('status')->default(Status::STATUS_ACTIVE)->comment('1 = ACTIVE, 2 = INACTIVE, 3 = BLOCKED');

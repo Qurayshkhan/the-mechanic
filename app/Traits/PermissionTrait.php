@@ -28,6 +28,8 @@ trait PermissionTrait
                 return UserType::MECHANIC;
             case 'customer':
                 return UserType::CUSTOMER;
+            case 'vendor':
+                return UserType::VENDOR;
             default:
                 return null;
         }

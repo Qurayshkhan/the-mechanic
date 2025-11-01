@@ -17,9 +17,9 @@ class RoleService
         $this->permissionRepository = $permissionRepository;
     }
 
-    public function getAllRoles()
+    public function getAllRoles($isAdmin = false)
     {
-        return $this->roleRepository->all();
+        return $this->roleRepository->all($isAdmin);
     }
 
     public function getRoles(Request $request)

@@ -31,6 +31,7 @@ class UserService
         $data['type'] = $data['role'] ? $this->checkRoleType($data['role']) : UserType::CUSTOMER;
         $data['email_verified_at'] = now();
         $data['password'] = Hash::make($data['password']);
+
         $user = $this->userRepository->create($data);
 
         if (!empty($data['role'])) {

@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
 
 interface RoleInterface
 {
-    public function all(): Collection;
+    public function all(bool $isAdmin = false): Collection;
     public function getRoles(Request $request): LengthAwarePaginator;
 
     public function create(array $data): Role;

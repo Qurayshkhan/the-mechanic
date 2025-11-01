@@ -2,18 +2,21 @@ import AuthTitle from "@/Components/AuthTitle";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
+import Select from "@/Components/Select";
 import TextInput from "@/Components/TextInput";
+import { CUSTOMER } from "@/Data/UsersTypes";
 import useLang from "@/hooks/useLang";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Register() {
+export default function Register({ roles }) {
     const { t } = useLang();
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
         password: "",
         password_confirmation: "",
+        role: CUSTOMER,
     });
 
     const submit = (e) => {
@@ -109,6 +112,20 @@ export default function Register() {
                         message={errors.password_confirmation}
                         className="mt-2"
                     />
+                </div>
+                <div className="mt-4">
+                    <InputLabel htmlFor="role" value="Role" />
+                    <Select
+                        value={data.role}
+                        onChange={(e) => setData("role", e.target.value)}
+                    >
+                        {roles.map((role) => {
+                            return (
+                                <option value={role.name}>{role?.name}</option>
+                            );
+                        })}
+                    </Select>
+                    <InputError message={errors.role} className="mt-2" />
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2 items-center justify-end">
