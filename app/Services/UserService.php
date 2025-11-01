@@ -42,16 +42,13 @@ class UserService
 
     public function updateUser(User $user, $data): User
     {
-        if (!empty($data['password'])) {
+        if (isset($data['password']) && !empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
-
         $user = $this->userRepository->update($user, $data);
-
-        if (!empty($data['role'])) {
+        if (isset($data['role']) && !empty($data['role'])) {
             $user->syncRoles([$data['role']]);
         }
-
         return $user;
     }
 
@@ -64,7 +61,7 @@ class UserService
 
     public function uploadAvatar($userId, $avatar)
     {
-        $user = $this->userRepository->getUserById($userId);
+        $user = $this->userRepository->findById($userId);
         $directory = 'uploads/users/' . $userId;
         $avatar = $this->saveFile($avatar, $directory);
         $this->userRepository->update($user, ['avatar' => $avatar]);
@@ -72,10 +69,15 @@ class UserService
 
     public function removeAvatar($userId): void
     {
-        $user = $this->userRepository->getUserById($userId);
+        $user = $this->userRepository->findById($userId);
         if ($user && $user->avatar) {
             $this->deleteFile($user->avatar);
             $this->userRepository->update($user, ['avatar' => Defaults::DEFAULT_AVATAR]);
         }
+    }
+
+    public function getUserById($id)
+    {
+        return $this->userRepository->findById($id);
     }
 }

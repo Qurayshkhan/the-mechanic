@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\MechanicMiddleware;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -17,19 +18,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
 
-            Route::middleware(['web', 'auth', 'role:admin'])
-                ->prefix('admin')
-                ->as('admin.')
+            Route::middleware(['web', 'auth', 'permission:admin'])
                 ->group(base_path('routes/admin.php'));
 
-            Route::middleware(['web', 'auth', 'role:mechanic'])
-                ->prefix('mechanic')
-                ->as('mechanic.')
+            Route::middleware(['web', 'auth', 'permission:mechanic'])
                 ->group(base_path('routes/mechanic.php'));
 
-            Route::middleware(['web', 'auth', 'role:customer'])
-                ->prefix('customer')
-                ->as('customer.')
+            Route::middleware(['web', 'auth', 'permission:customer'])
                 ->group(base_path('routes/customer.php'));
         }
     )
@@ -45,6 +40,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
+            'mechanic' => MechanicMiddleware::class,
 
         ]);
     })

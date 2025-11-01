@@ -7,6 +7,7 @@ use App\Jobs\SendVerificationEmailJob;
 use App\Models\User;
 use App\Services\RoleService;
 use App\Services\UserService;
+use DB;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Redirect;
 
 class RegisteredUserController extends Controller
 {
@@ -46,13 +48,20 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => 'required',
         ]);
+        try {
+            DB::beginTransaction();
 
-        $user = $this->userService->createUser($request->all());
+            $user = $this->userService->createUser($request->all());
 
-        SendVerificationEmailJob::dispatch($user)->delay(now()->addSeconds(5));
+            SendVerificationEmailJob::dispatch($user)->delay(now()->addSeconds(5));
 
-        Auth::login($user);
+            Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+            DB::commit();
+            return redirect(route('dashboard', absolute: false));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Redirect::back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 }

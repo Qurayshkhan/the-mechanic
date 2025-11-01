@@ -14,5 +14,5 @@ interface UserInterface
     public function destroy(User $user): bool;
 
     public function update(User $user, array $data): User;
-    public function getUserById(int $id);
+    public function findById(int $id);
 }

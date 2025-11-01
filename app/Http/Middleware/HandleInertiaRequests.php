@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserType;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\Session;
@@ -33,6 +34,9 @@ class HandleInertiaRequests extends Middleware
 
         if ($user) {
             $user->load(['roles.permissions']);
+        }
+        if ($user->type == UserType::MECHANIC->value) {
+            $user->load(['mechanicInformation']);
         }
         return [
             ...parent::share($request),

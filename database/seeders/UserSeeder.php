@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
         $adminPermissions = Permission::all();
 
 
-        $mechanicPermission = Permission::where('name', 'view_dashboard')->first();
+        $mechanicPermission = Permission::whereIn('name', ['view_dashboard', 'mechanic'])->first();
         $customerPermission = Permission::where('name', 'view_dashboard')->first();
 
         $adminRole->syncPermissions($adminPermissions);

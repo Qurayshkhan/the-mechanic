@@ -14,14 +14,21 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique()->nullable();
             $table->string('avatar')->default('assets/images/avatar/default.png')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone_no')->nullable();
+            $table->string('cnic')->nullable();
+            $table->longText('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('area')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('date_of_birth')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('type', [1, 2, 3, 4])
-                ->comment('1 = Admin, 2 = Mechanic, 3 = Customer, 4 = Vendor')
+            $table->string('type')
                 ->default(UserType::CUSTOMER);
             $table->tinyInteger('status')->default(Status::STATUS_ACTIVE)->comment('1 = ACTIVE, 2 = INACTIVE, 3 = BLOCKED');
             $table->softDeletes();

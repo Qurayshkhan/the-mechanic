@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserType;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -30,7 +32,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'phone_no',
-        'type'
+        'type',
+        'uuid',
+        'cnic',
+        'date_of_birth',
+        'longitude',
+        'latitude',
+        'area',
+        'city',
+        'address',
     ];
 
     /**
@@ -43,7 +53,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    // protected $appends = ['avatar'];
 
     /**
      * Get the attributes that should be cast.
@@ -57,6 +66,27 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = (string) Str::uuid();
+            }
+        });
+
+        static::updating(function ($model) {
+            if ($model->type == UserType::MECHANIC->value) {
+                $model->mechanicInformation()->updateOrCreate([
+                    'mechanic_id' => $model->id,
+
+                ], ['step_position' => 2]);
+            }
+        });
+    }
+
+
 
     public function scopeNotAdmin($query)
     {
@@ -72,6 +102,16 @@ class User extends Authenticatable implements MustVerifyEmail
             ? asset(ltrim('/storage/' . $value, '/'))
             : asset('assets/images/avatar/default.png')
         );
+    }
+
+    public function mechanicInformation()
+    {
+        return $this->hasOne(MechanicInformation::class, 'mechanic_id', 'id');
+    }
+
+    public function isMechanicVerified(): bool
+    {
+        return $this->mechanicInformation?->is_verified === true;
     }
 
 }
