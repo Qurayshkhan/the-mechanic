@@ -47,6 +47,9 @@ export default function GuestLayout({ children }) {
                         className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
                     >
                         {t("Don’t have an account?")}
+                        <span className=" mx-1 text-decoration-underline">
+                            {t("Signup")}
+                        </span>
                     </Link>
                 )}
 
@@ -56,6 +59,9 @@ export default function GuestLayout({ children }) {
                         className="absolute top-0 right-4  sm:right-6 text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors"
                     >
                         {t("Already have an account?")}
+                        <span className=" mx-1 text-decoration-underline">
+                            {t("Sign In")}
+                        </span>
                     </Link>
                 )}
 
