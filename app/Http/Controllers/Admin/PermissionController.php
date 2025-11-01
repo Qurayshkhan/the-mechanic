@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\ModuleService;
 use App\Services\PermissionService;
 use App\Traits\PermissionTrait;
 use Illuminate\Http\Request;
@@ -14,11 +15,12 @@ class PermissionController extends Controller
 {
     use PermissionTrait;
 
-    protected $permissionService;
+    protected $permissionService, $moduleService;
 
-    public function __construct(PermissionService $permissionService)
+    public function __construct(PermissionService $permissionService, ModuleService $moduleService)
     {
         $this->permissionService = $permissionService;
+        $this->moduleService = $moduleService;
     }
 
     public function editPermission(Role $role)
@@ -27,7 +29,7 @@ class PermissionController extends Controller
         $role->load('permissions');
         return Inertia::render('Admin/Roles/EditTabs/Permissions', [
             'role' => $role,
-            'permissions' => $this->permissionService->getAllPermissions(),
+            'modules' => $this->moduleService->getAllModulesWithPermissions(),
         ]);
     }
 

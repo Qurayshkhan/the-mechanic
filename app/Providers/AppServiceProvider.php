@@ -3,16 +3,19 @@
 namespace App\Providers;
 
 use App;
+use App\Repositories\ModuleRepository;
+use App\Interface\ModuleInterface;
+use App\Interface\PermissionInterface;
 use App\Interface\RoleInterface;
-use App\Interface\RolesAndPermissionInterface;
 use App\Interface\UserInterface;
+use App\Repositories\PermissionRepository;
 use App\Repositories\RoleRepository;
-use App\Repositories\RolesAndPermissionRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Lang;
 use Route;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,10 +29,18 @@ class AppServiceProvider extends ServiceProvider
             RoleInterface::class,
             RoleRepository::class
         );
+        $this->app->bind(
+            PermissionInterface::class,
+            PermissionRepository::class
+        );
 
         $this->app->bind(
             UserInterface::class,
             UserRepository::class
+        );
+        $this->app->bind(
+            ModuleInterface::class,
+            ModuleRepository::class
         );
     }
 
@@ -46,7 +57,7 @@ class AppServiceProvider extends ServiceProvider
             },
             'locale' => fn() => App::getLocale(),
             'dir' => fn() => App::getLocale() === 'ur' ? 'rtl' : 'ltr',
-            'translations' => fn() => __('messages'),
+            'translations' => fn() => Lang::get('messages'),
         ]);
     }
 }

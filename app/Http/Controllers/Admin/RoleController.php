@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleStoreRequest;
 use App\Http\Requests\UpdateRoleRequest;
+use App\Services\ModuleService;
 use App\Services\PermissionService;
 use App\Services\RoleService;
 use Illuminate\Http\Request;
@@ -16,12 +17,13 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class RoleController extends Controller
 {
     use AuthorizesRequests;
-    protected $roleService, $permissionService;
+    protected $roleService, $permissionService, $moduleService;
 
-    public function __construct(RoleService $roleService, PermissionService $permissionService)
+    public function __construct(RoleService $roleService, PermissionService $permissionService, ModuleService $moduleService)
     {
         $this->roleService = $roleService;
         $this->permissionService = $permissionService;
+        $this->moduleService = $moduleService;
     }
 
     public function index(Request $request)
@@ -37,7 +39,7 @@ class RoleController extends Controller
     {
         $this->authorize('create', Role::class);
         return Inertia::render('Admin/Roles/Create', [
-            'permissions' => $this->permissionService->getAllPermissions(),
+            'modules' => $this->moduleService->getAllModulesWithPermissions(),
         ]);
     }
 
