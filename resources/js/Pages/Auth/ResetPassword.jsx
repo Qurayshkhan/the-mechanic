@@ -27,7 +27,7 @@ export default function ResetPassword({ token, email }) {
 
     return (
         <GuestLayout>
-            <Head title="Reset Password" />
+            <Head title={t("Reset Password")} />
             <AuthTitle
                 title="Reset Password"
                 subTitle="Enter your new password below to securely regain access to your account."

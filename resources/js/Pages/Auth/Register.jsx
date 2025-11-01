@@ -26,7 +26,7 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title={t("Register")} />
 
             <form onSubmit={submit}>
                 <AuthTitle

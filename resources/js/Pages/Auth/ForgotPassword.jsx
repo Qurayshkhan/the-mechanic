@@ -21,7 +21,7 @@ export default function ForgotPassword({ status }) {
 
     return (
         <GuestLayout>
-            <Head title="Forgot Password" />
+            <Head title={t("Forgot Password")} />
             <AuthTitle
                 title={"Forgot Password"}
                 subTitle={`Forgot your password? No problem. Just let us know your email
