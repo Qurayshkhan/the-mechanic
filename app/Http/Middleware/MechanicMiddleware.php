@@ -22,9 +22,8 @@ class MechanicMiddleware
             return Redirect::route('login');
         }
 
-        // dd($user->type == UserType::MECHANIC->value);
 
-        if ($user->type == UserType::MECHANIC->value) {
+        if ($user->type == UserType::MECHANIC->value && $user->mechanicInformation->is_verified == false) {
             return Redirect::route('mechanic.registrationForm');
         }
 

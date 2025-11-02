@@ -3,13 +3,29 @@ import React, { useState } from "react";
 import Step1 from "./partials/Step1";
 import StepIndicator from "./partials/StepIndicator";
 import Step2 from "./partials/Step2";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { Power } from "lucide-react";
+import { router } from "@inertiajs/react";
 
-const MechanicForm = () => {
+const MechanicForm = ({ mechanicTypes, skills }) => {
     const user = useAuth();
     const { mechanic_information } = user;
     const [currentStep, setCurrentStep] = useState(
         mechanic_information ? mechanic_information.step_position : 1
     );
+
+    const [processing, setProcessing] = useState(false);
+
+    const handleLogout = () => {
+        setProcessing(true);
+        router.post(
+            route("logout"),
+            {},
+            {
+                onFinish: () => setProcessing(false),
+            }
+        );
+    };
 
     const totalSteps = 4;
     const stepLabels = [
@@ -40,12 +56,21 @@ const MechanicForm = () => {
     return (
         <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100">
             <div className="w-full min-h-screen flex flex-col">
-                <div className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-20">
+                <div className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-20 flex gap-2 items-center justify-center">
                     <StepIndicator
                         currentStep={currentStep}
                         totalSteps={totalSteps}
                         stepLabels={stepLabels}
                     />
+                    <PrimaryButton
+                        type="button"
+                        className="mx-2 flex items-center gap-2"
+                        onClick={handleLogout}
+                        processing={processing}
+                    >
+                        <Power className="w-5 h-5" />
+                        {"Logout"}
+                    </PrimaryButton>
                 </div>
 
                 <div className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
@@ -59,7 +84,12 @@ const MechanicForm = () => {
                                 />
                             </div>
                         )}
-                        {currentStep === 2 && <Step2 />}
+                        {currentStep === 2 && (
+                            <Step2
+                                mechanicTypes={mechanicTypes}
+                                skills={skills}
+                            />
+                        )}
                         {currentStep === 3 && (
                             <div className="transition-opacity duration-300 ease-in-out">
                                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">

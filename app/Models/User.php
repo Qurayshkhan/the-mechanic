@@ -76,14 +76,14 @@ class User extends Authenticatable implements MustVerifyEmail
             }
         });
 
-        static::updating(function ($model) {
-            if ($model->type == UserType::MECHANIC->value) {
-                $model->mechanicInformation()->updateOrCreate([
+        static::created(function ($model) {
+            if ($model->type->value == UserType::MECHANIC->value) {
+                $model->mechanicInformation()->create([
                     'mechanic_id' => $model->id,
-
-                ], ['step_position' => 2]);
+                ]);
             }
         });
+
     }
 
 

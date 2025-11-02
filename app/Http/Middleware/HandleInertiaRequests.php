@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
         if ($user) {
             $user->load(['roles.permissions']);
         }
-        if ($user->type == UserType::MECHANIC->value) {
+        if ($user && $user->type == UserType::MECHANIC->value) {
             $user->load(['mechanicInformation']);
         }
         return [

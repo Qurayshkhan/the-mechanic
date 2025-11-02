@@ -28,7 +28,6 @@ const StepIndicator = ({ currentStep, totalSteps, stepLabels }) => {
                                 key={step}
                                 className="flex flex-col items-center flex-1 relative z-10"
                             >
-                                {/* Step Circle */}
                                 <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-300 mb-2 sm:mb-3">
                                     <div
                                         className={`w-full h-full rounded-full flex items-center justify-center transition-all duration-300 ${

@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Mechanic\MechanicController;
+use App\Http\Controllers\Mechanic\MechanicOnboardingController;
 
 
 Route::group(['prefix' => 'mechanic'], function () {
 
-    // mechanic onboarding
-    Route::get('/mechanic-registration-form', [MechanicController::class, 'createGatherInformationForm'])->name('mechanic.registrationForm');
+    Route::get('/mechanic-registration-form', [MechanicOnboardingController::class, 'createGatherInformationForm'])->name('mechanic.registrationForm');
 
-    Route::put("mechanic-registration-form", [MechanicController::class, 'updateRegistrationForm'])->name('mechanic.updateRegistrationForm');
+    Route::put("mechanic-registration-form", [MechanicOnboardingController::class, 'updateRegistrationForm'])->name('mechanic.updateRegistrationForm');
 });
 

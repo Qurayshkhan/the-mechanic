@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App;
+use App\Interface\MechanicInformationInterface;
+use App\Repositories\MechanicInformationRepository;
 use App\Repositories\ModuleRepository;
 use App\Interface\ModuleInterface;
 use App\Interface\PermissionInterface;
@@ -41,6 +43,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ModuleInterface::class,
             ModuleRepository::class
+        );
+        $this->app->bind(
+            MechanicInformationInterface::class,
+            MechanicInformationRepository::class
         );
     }
 
