@@ -4,7 +4,10 @@ namespace App\Providers;
 
 use App;
 use App\Interface\MechanicInformationInterface;
+use App\Interface\MechanicServiceInterface;
+use App\Interface\ServiceInterface;
 use App\Repositories\MechanicInformationRepository;
+use App\Repositories\MechanicServiceRepository;
 use App\Repositories\ModuleRepository;
 use App\Interface\ModuleInterface;
 use App\Interface\PermissionInterface;
@@ -12,6 +15,7 @@ use App\Interface\RoleInterface;
 use App\Interface\UserInterface;
 use App\Repositories\PermissionRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\ServiceRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
@@ -27,27 +31,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(
-            RoleInterface::class,
-            RoleRepository::class
-        );
-        $this->app->bind(
-            PermissionInterface::class,
-            PermissionRepository::class
-        );
+        $repositories = [
+            RoleInterface::class => RoleRepository::class,
+            PermissionInterface::class => PermissionRepository::class,
+            UserInterface::class => UserRepository::class,
+            ModuleInterface::class => ModuleRepository::class,
+            MechanicInformationInterface::class => MechanicInformationRepository::class,
+            ServiceInterface::class => ServiceRepository::class,
+            MechanicServiceInterface::class => MechanicServiceRepository::class,
+        ];
 
-        $this->app->bind(
-            UserInterface::class,
-            UserRepository::class
-        );
-        $this->app->bind(
-            ModuleInterface::class,
-            ModuleRepository::class
-        );
-        $this->app->bind(
-            MechanicInformationInterface::class,
-            MechanicInformationRepository::class
-        );
+        foreach ($repositories as $interface => $repository) {
+            $this->app->bind($interface, $repository);
+        }
     }
 
     /**

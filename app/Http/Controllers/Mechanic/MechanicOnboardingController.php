@@ -22,10 +22,14 @@ class MechanicOnboardingController extends Controller
 
     public function createGatherInformationForm(Request $request)
     {
-
         return Inertia::render('Mechanic/Onboarding/Form', [
             'mechanicTypes' => $this->mechanicService->getAllMechanicTypes(),
-            'skills' => $this->mechanicService->getSkillsByMechanicType($request->mechanic_type_id)
+            'skills' => $this->mechanicService->getSkillsByMechanicType(),
+            'services' => $this->mechanicService->getAllServicesByMechanicType($request?->user()?->mechanicInformation?->mechanic_type_id),
+            'mechanicServices' => $this->mechanicService->getMechanicServices($request?->user()?->id ?? null),
+            'filters' => [
+                'mechanic_type_id' => $request->input('mechanic_type_id', ""),
+            ]
         ]);
     }
 
@@ -35,11 +39,50 @@ class MechanicOnboardingController extends Controller
             DB::beginTransaction();
             $this->mechanicService->updateMechanicOnBoardingForm(Auth::id(), $request->all());
             DB::commit();
-            return redirect()->route("mechanic.registrationForm");
+            return Redirect::route("mechanic.registrationForm");
         } catch (\Exception $e) {
             info($e->getMessage());
             DB::rollBack();
             Redirect::back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function createService(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $this->mechanicService->createMechanicService($request->all());
+            DB::commit();
+            return Redirect::route('mechanic.registrationForm');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Redirect::back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function storeMechanicService(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $this->mechanicService->storeMechanicService($request->all());
+            DB::commit();
+            return Redirect::back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Redirect::back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function deleteMechanicService($id)
+    {
+        try {
+            DB::beginTransaction();
+            $this->mechanicService->deleteMechanicService($id);
+            DB::commit();
+            return Redirect::back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Redirect::back()->withErrors(['message' => $e->getMessage()]);
         }
     }
 }

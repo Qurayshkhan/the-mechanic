@@ -36,11 +36,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'uuid',
         'cnic',
         'date_of_birth',
-        'longitude',
-        'latitude',
-        'area',
-        'city',
-        'address',
     ];
 
     /**
@@ -113,5 +108,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->mechanicInformation?->is_verified === true;
     }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'mechanic_skills', 'mechanic_id', 'skill_id')
+            ->withTimestamps();
+    }
+
 
 }

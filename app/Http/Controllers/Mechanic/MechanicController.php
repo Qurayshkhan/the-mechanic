@@ -17,5 +17,4 @@ class MechanicController extends Controller
     {
         $this->userService = $userService;
     }
-
 }

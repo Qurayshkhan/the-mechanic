@@ -20,11 +20,6 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->string('phone_no')->nullable();
             $table->string('cnic')->nullable();
-            $table->longText('address')->nullable();
-            $table->string('city')->nullable();
-            $table->string('area')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
             $table->string('date_of_birth')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

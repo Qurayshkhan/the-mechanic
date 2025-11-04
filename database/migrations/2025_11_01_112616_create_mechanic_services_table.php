@@ -15,7 +15,10 @@ return new class extends Migration {
         Schema::create('mechanic_services', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'mechanic_id')->nullable()->constrained('users')->cascadeOnDelete();
-            $table->foreignIdFor(Services::class)->nullable()->constrained('services')->cascadeOnDelete();
+            $table->string('name')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('charges')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

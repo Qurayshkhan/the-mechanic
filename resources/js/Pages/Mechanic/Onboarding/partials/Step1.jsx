@@ -7,16 +7,7 @@ import useAuth from "@/hooks/useAuth";
 import { StepOneSchema } from "@/Schema/mechanics/OnboardingFormSchema";
 import { router } from "@inertiajs/react";
 import { useFormik } from "formik";
-import {
-    Building,
-    Calendar,
-    Home,
-    Mail,
-    MapPin,
-    Phone,
-    User,
-    ArrowRight,
-} from "lucide-react";
+import { Calendar, Mail, Phone, User, ArrowRight, IdCard } from "lucide-react";
 import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -31,11 +22,12 @@ const Step1 = ({ onNext, onPrevious, isFirstStep }) => {
         date_of_birth: user?.date_of_birth
             ? new Date(user.date_of_birth)
             : null,
-        address: user?.address ?? "",
-        city: user?.city ?? "",
-        area: user?.area ?? "",
-        latitude: user?.latitude ?? "",
-        longitude: user?.longitude ?? "",
+        cnic: user?.cnic ?? "",
+        // address: user?.address ?? "",
+        // city: user?.city ?? "",
+        // area: user?.area ?? "",
+        // latitude: user?.latitude ?? "",
+        // longitude: user?.longitude ?? "",
         step_position: 1,
     };
 
@@ -178,56 +170,20 @@ const Step1 = ({ onNext, onPrevious, isFirstStep }) => {
 
                     <div className="mb-4 sm:mb-5 md:col-span-2">
                         <div className="flex items-center gap-2 mb-2">
-                            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-                            <InputLabel htmlFor="address" value="Address" />
+                            <IdCard className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+                            <InputLabel htmlFor="cnic" value="Cnic" />
                         </div>
                         <TextInput
-                            name="address"
-                            id="address"
+                            name="cnic"
+                            id="cnic"
                             onChange={handleChange}
-                            value={values.address}
-                            placeholder="Enter your address"
+                            value={values.cnic}
+                            placeholder="Enter your cnic"
                             onBlur={handleBlur}
                             className="w-full mt-1"
                         />
-                        {errors.address && touched.address && (
-                            <InputError message={errors.address} />
-                        )}
-                    </div>
-                    <div className="mb-4 sm:mb-5">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Building className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-                            <InputLabel htmlFor="city" value="City" />
-                        </div>
-                        <TextInput
-                            name="city"
-                            id="city"
-                            onChange={handleChange}
-                            value={values.city}
-                            placeholder="Enter your city"
-                            onBlur={handleBlur}
-                            className="w-full mt-1"
-                        />
-                        {errors.city && touched.city && (
-                            <InputError message={errors.city} />
-                        )}
-                    </div>
-                    <div className="mb-4 sm:mb-5">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Home className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-                            <InputLabel htmlFor="area" value="Area" />
-                        </div>
-                        <TextInput
-                            name="area"
-                            id="area"
-                            onChange={handleChange}
-                            value={values.area}
-                            placeholder="Enter your area"
-                            onBlur={handleBlur}
-                            className="w-full mt-1"
-                        />
-                        {errors.area && touched.area && (
-                            <InputError message={errors.area} />
+                        {errors.cnic && touched.cnic && (
+                            <InputError message={errors.cnic} />
                         )}
                     </div>
                 </div>

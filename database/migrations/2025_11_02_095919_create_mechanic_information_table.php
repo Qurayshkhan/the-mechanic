@@ -24,6 +24,13 @@ return new class extends Migration {
             $table->string('years_of_experience')->nullable();
             $table->string('certificate')->nullable();
             $table->string('license_number')->nullable();
+
+            $table->longText('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('area')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+
             $table->timestamps();
         });
     }

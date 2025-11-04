@@ -17,6 +17,15 @@ class SkillsSeeder extends Seeder
         Skill::query()->delete();
 
         $skills = [
+            'Bike' => [
+                'Engine Tuning',
+                'Chain Adjustment',
+                'Brake Pad Replacement',
+                'Oil Change',
+                'Clutch Repair',
+                'Electrical Systems',
+                'Tyre Replacement',
+            ],
             'Car' => [
                 'Engine Repair',
                 'Brake Service & Replacement',
@@ -26,15 +35,6 @@ class SkillsSeeder extends Seeder
                 'Suspension & Steering',
                 'Wheel Alignment & Balancing',
                 'Electrical Diagnostics',
-            ],
-            'Bike' => [
-                'Engine Tuning',
-                'Chain Adjustment',
-                'Brake Pad Replacement',
-                'Oil Change',
-                'Clutch Repair',
-                'Electrical Systems',
-                'Tyre Replacement',
             ],
             'Bus' => [
                 'Diesel Engine Maintenance',

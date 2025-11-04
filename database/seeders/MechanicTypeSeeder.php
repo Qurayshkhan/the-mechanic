@@ -16,8 +16,8 @@ class MechanicTypeSeeder extends Seeder
     {
         MechanicType::query()->delete();
         MechanicType::insert([
-            ['name' => 'Car'],
             ['name' => 'Bike'],
+            ['name' => 'Car'],
             ['name' => 'Bus'],
             ['name' => 'Truck'],
         ]);

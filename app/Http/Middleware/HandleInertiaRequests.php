@@ -36,7 +36,7 @@ class HandleInertiaRequests extends Middleware
             $user->load(['roles.permissions']);
         }
         if ($user && $user->type == UserType::MECHANIC->value) {
-            $user->load(['mechanicInformation']);
+            $user->load(['mechanicInformation', 'skills']);
         }
         return [
             ...parent::share($request),

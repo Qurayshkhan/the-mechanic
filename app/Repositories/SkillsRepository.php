@@ -16,6 +16,10 @@ class SkillsRepository implements SkillsInterface
 
     public function getSkillsByMechanicType($mechanicTypeId = null)
     {
-        return $this->skill->where('mechanic_type_id', $mechanicTypeId)->get();
+        $query = $this->skill->query();
+        if ($mechanicTypeId) {
+            $query->where('mechanic_type_id', $mechanicTypeId)->get();
+        }
+        return $query->get();
     }
 }
