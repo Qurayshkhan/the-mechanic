@@ -8,6 +8,7 @@ import { Power } from "lucide-react";
 import { Head, router } from "@inertiajs/react";
 import DangerButton from "@/Components/DangerButton";
 import Step3 from "./partials/Step3";
+import Step4 from "./partials/Step4";
 
 const MechanicForm = ({ mechanicTypes, skills, services, mechanicServices = [], filters }) => {
     const user = useAuth();
@@ -105,16 +106,7 @@ const MechanicForm = ({ mechanicTypes, skills, services, mechanicServices = [], 
                                 />
                             )}
                             {currentStep === 4 && (
-                                <div className="transition-opacity duration-300 ease-in-out">
-                                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
-                                        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                                            Step 4: Documents & Verification
-                                        </h2>
-                                        <p className="text-gray-600">
-                                            This step will be implemented soon.
-                                        </p>
-                                    </div>
-                                </div>
+                                <Step4 />
                             )}
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Mechanic\MechanicController;
 use App\Http\Controllers\Mechanic\MechanicOnboardingController;
-
+use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'mechanic'], function () {
 

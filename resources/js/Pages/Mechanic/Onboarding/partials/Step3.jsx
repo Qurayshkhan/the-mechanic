@@ -127,7 +127,7 @@ const Step3 = ({
                 onSuccess: () => {
                     handleCloseModal();
                     setProcessing(false);
-                    setStepError(""); // Clear step error when service is added
+                    setStepError("");
                 },
                 onError: (errors) => {
                     setErrors(errors);
@@ -142,7 +142,7 @@ const Step3 = ({
             router.delete(route("mechanic.deleteMechanicService", id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    setStepError(""); // Clear step error after deletion
+                    setStepError("");
                 },
             });
         }
@@ -195,7 +195,6 @@ const Step3 = ({
                     </p>
                 </div>
 
-                {/* Template Services Section */}
                 {services && services.length > 0 && (
                     <div className="mb-8">
                         <div className="flex justify-between items-center mb-4">
