@@ -11,7 +11,7 @@ use App\Repositories\ServiceRepository;
 use App\Repositories\SkillsRepository;
 use App\Repositories\UserRepository;
 use App\Traits\FileTrait;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class MechanicService
 {
@@ -71,22 +71,18 @@ class MechanicService
         $documentData = ['mechanic_id' => $userId];
         $directory = 'uploads/mechanics/' . $userId . '/documents';
 
-        // Handle license number
         if (isset($data['license_number'])) {
             $documentData['license_number'] = $data['license_number'];
         }
 
-        // Handle CNIC Front
         if (isset($data['cnic_front']) && $data['cnic_front']) {
             $documentData['cnic_front'] = $this->saveFile($data['cnic_front'], $directory . '/cnic', false, 'public');
         }
 
-        // Handle CNIC Back
         if (isset($data['cnic_back']) && $data['cnic_back']) {
             $documentData['cnic_back'] = $this->saveFile($data['cnic_back'], $directory . '/cnic', false, 'public');
         }
 
-        // Handle Workshop Photos
         $workshopPhotoFields = ['workshop_photo_1', 'workshop_photo_2', 'workshop_photo_3', 'workshop_photo_4'];
         foreach ($workshopPhotoFields as $field) {
             if (isset($data[$field]) && $data[$field]) {
@@ -94,14 +90,16 @@ class MechanicService
             }
         }
 
-        // Update or create document
+
         $document = MechanicDocument::updateOrCreate(
             ['mechanic_id' => $userId],
             $documentData
         );
 
-        // Update step position to 4 (step 4 completed)
-        $this->mechanicInformationRepository->update($user->id, ['step_position' => 4]);
+        $this->mechanicInformationRepository->update($user->id, [
+            'step_position' => 5,
+            'is_onboarding_form_complete' => true,
+        ]);
 
         return $document;
     }
@@ -135,6 +133,4 @@ class MechanicService
     {
         return $this->mechanicServiceRepository->delete($id);
     }
-
-
 }

@@ -6,21 +6,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'mechanic'], function () {
 
-    Route::get('/mechanic-registration-form', [MechanicOnboardingController::class, 'createGatherInformationForm'])->name('mechanic.registrationForm');
+    Route::group(['prefix' => 'onboarding', 'middleware' => 'mechanic'], function () {
+        Route::get('/mechanic-registration-form', [MechanicOnboardingController::class, 'createGatherInformationForm'])->name('mechanic.registrationForm');
+        Route::put("mechanic-registration-form", [MechanicOnboardingController::class, 'updateRegistrationForm'])->name('mechanic.updateRegistrationForm');
+        Route::prefix('services')->group(function () {
+            Route::post('/store', [MechanicOnboardingController::class, 'createService'])->name('mechanic.createService');
+        });
+        Route::prefix('mechanic-services')->group(function () {
+            Route::post('/store', [MechanicOnboardingController::class, 'storeMechanicService'])->name('mechanic.storeMechanicService');
+            Route::delete('/{id}', [MechanicOnboardingController::class, 'deleteMechanicService'])->name('mechanic.deleteMechanicService');
+        });
+        Route::prefix('documents')->group(function () {
+            Route::post('/store', [MechanicOnboardingController::class, 'storeDocuments'])->name('mechanic.storeDocuments');
+        });
 
-    Route::put("mechanic-registration-form", [MechanicOnboardingController::class, 'updateRegistrationForm'])->name('mechanic.updateRegistrationForm');
-
-
-    Route::prefix('services')->group(function () {
-        Route::post('/store', [MechanicOnboardingController::class, 'createService'])->name('mechanic.createService');
-    });
-
-    Route::prefix('mechanic-services')->group(function () {
-        Route::post('/store', [MechanicOnboardingController::class, 'storeMechanicService'])->name('mechanic.storeMechanicService');
-        Route::delete('/{id}', [MechanicOnboardingController::class, 'deleteMechanicService'])->name('mechanic.deleteMechanicService');
-    });
-
-    Route::prefix('documents')->group(function () {
-        Route::post('/store', [MechanicOnboardingController::class, 'storeDocuments'])->name('mechanic.storeDocuments');
+        Route::get('/waiting-page', [MechanicOnboardingController::class, 'waiting'])->name('mechanic.waitingPage');
     });
 });

@@ -18,15 +18,28 @@ class MechanicMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
+
         if (empty($user)) {
             return Redirect::route('login');
         }
 
+        if ($user->type == UserType::MECHANIC->value) {
+            $mechanicInfo = $user->mechanicInformation;
 
-        if ($user->type == UserType::MECHANIC->value && $user->mechanicInformation->is_verified == false) {
-            return Redirect::route('mechanic.registrationForm');
+
+            if ((!$mechanicInfo || !$mechanicInfo->is_onboarding_form_complete)
+                && !$request->routeIs('mechanic.registrationForm')
+            ) {
+                return redirect()->route('mechanic.registrationForm');
+            }
+
+            if (
+                $mechanicInfo && $mechanicInfo->is_onboarding_form_complete && !$mechanicInfo->is_verified
+                && !$request->routeIs('mechanic.waitingPage')
+            ) {
+                return redirect()->route('mechanic.waitingPage');
+            }
         }
-
         return $next($request);
     }
 }

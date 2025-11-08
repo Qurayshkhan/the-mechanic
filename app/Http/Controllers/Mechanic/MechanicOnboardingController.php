@@ -90,19 +90,19 @@ class MechanicOnboardingController extends Controller
     {
         try {
             $request->validate([
-                'cnic_front' => 'required|image|mimes:jpeg,png,jpg|max:10240',
-                'cnic_back' => 'required|image|mimes:jpeg,png,jpg|max:10240',
-                'workshop_photo_1' => 'required|image|mimes:jpeg,png,jpg|max:10240',
-                'workshop_photo_2' => 'required|image|mimes:jpeg,png,jpg|max:10240',
-                'workshop_photo_3' => 'required|image|mimes:jpeg,png,jpg|max:10240',
-                'workshop_photo_4' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+                'cnic_front' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'cnic_back' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'workshop_photo_1' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'workshop_photo_2' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'workshop_photo_3' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'workshop_photo_4' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'license_number' => 'nullable|string|max:255',
             ]);
 
             DB::beginTransaction();
             $this->mechanicService->storeMechanicDocuments(Auth::id(), $request->all());
             DB::commit();
-            return Redirect::route("mechanic.registrationForm")->with('success', 'Documents uploaded successfully!');
+            return Redirect::route("mechanic.waitingPage")->with('success', 'Documents uploaded successfully!');
         } catch (\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
             return Redirect::back()->withErrors($e->errors())->withInput();
@@ -110,5 +110,10 @@ class MechanicOnboardingController extends Controller
             DB::rollBack();
             return Redirect::back()->withErrors(['message' => $e->getMessage()])->withInput();
         }
+    }
+
+    public function waiting()
+    {
+        return Inertia::render('Mechanic/Onboarding/Waiting');
     }
 }

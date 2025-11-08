@@ -17,14 +17,12 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(User::class, 'mechanic_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignIdFor(MechanicType::class)->nullable()->constrained('mechanic_types')->cascadeOnDelete();
+            $table->boolean('is_verified')->default(false);
+            $table->boolean('is_onboarding_form_complete')->default(false);
             $table->string('work_shop_name')->nullable();
             $table->string('work_shop_address')->nullable();
-            $table->boolean('is_verified')->default(false);
             $table->tinyInteger('step_position')->default(1);
             $table->string('years_of_experience')->nullable();
-            $table->string('certificate')->nullable();
-            $table->string('license_number')->nullable();
-
             $table->longText('address')->nullable();
             $table->string('city')->nullable();
             $table->string('area')->nullable();

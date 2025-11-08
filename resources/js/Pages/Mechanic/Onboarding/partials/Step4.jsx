@@ -6,23 +6,23 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import { Dropzone, FileMosaic } from "@files-ui/react";
 import React, { useState, useEffect } from "react";
 import { router, usePage } from "@inertiajs/react";
-import { 
-    FileText, 
-    IdCard, 
-    Building2, 
-    Camera, 
+import {
+    FileText,
+    IdCard,
+    Building2,
+    Camera,
     AlertCircle,
     CheckCircle2,
     Info,
     ArrowLeft,
-    ArrowRight
+    ArrowRight,
 } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
 
 const Step4 = ({ onNext, onPrevious }) => {
     const user = useAuth();
     const { errors: pageErrors, flash } = usePage().props;
-    
+
     const [licenseNumber, setLicenseNumber] = useState(
         user?.mechanic_document?.license_number || ""
     );
@@ -32,58 +32,59 @@ const Step4 = ({ onNext, onPrevious }) => {
     const [workshopPhoto2, setWorkshopPhoto2] = useState([]);
     const [workshopPhoto3, setWorkshopPhoto3] = useState([]);
     const [workshopPhoto4, setWorkshopPhoto4] = useState([]);
-    
+
     const [fieldErrors, setFieldErrors] = useState({});
     const [processing, setProcessing] = useState(false);
     const [submitError, setSubmitError] = useState("");
 
-    // Load existing documents if available
     useEffect(() => {
         if (user?.mechanic_document) {
             const doc = user.mechanic_document;
-            // You can pre-populate file arrays with existing files if needed
-            // This would require converting file paths to FileMosaic format
         }
     }, [user]);
 
     const handleFileChange = (setter, fieldName) => (incomingFiles) => {
         setter(incomingFiles);
-        // Clear field error when file is added
+
         if (incomingFiles && incomingFiles.length > 0) {
-            setFieldErrors(prev => ({ ...prev, [fieldName]: null }));
+            setFieldErrors((prev) => ({ ...prev, [fieldName]: null }));
             setSubmitError("");
         }
     };
 
     const handleRemoveFile = (setter, fieldName) => (id) => {
-        setter(prev => prev.filter((x) => x.id !== id));
+        setter((prev) => prev.filter((x) => x.id !== id));
     };
 
     const validateForm = () => {
         const errors = {};
-        
+
         if (!cnicFront || cnicFront.length === 0) {
             errors.cnic_front = "CNIC front photo is required";
         }
-        
+
         if (!cnicBack || cnicBack.length === 0) {
             errors.cnic_back = "CNIC back photo is required";
         }
-        
+
         if (!workshopPhoto1 || workshopPhoto1.length === 0) {
-            errors.workshop_photo_1 = "Workshop photo 1 (Inside the shop) is required";
+            errors.workshop_photo_1 =
+                "Workshop photo 1 (Inside the shop) is required";
         }
-        
+
         if (!workshopPhoto2 || workshopPhoto2.length === 0) {
-            errors.workshop_photo_2 = "Workshop photo 2 (Outside - front view) is required";
+            errors.workshop_photo_2 =
+                "Workshop photo 2 (Outside - front view) is required";
         }
-        
+
         if (!workshopPhoto3 || workshopPhoto3.length === 0) {
-            errors.workshop_photo_3 = "Workshop photo 3 (Road - right side) is required";
+            errors.workshop_photo_3 =
+                "Workshop photo 3 (Road - right side) is required";
         }
-        
+
         if (!workshopPhoto4 || workshopPhoto4.length === 0) {
-            errors.workshop_photo_4 = "Workshop photo 4 (Road - left side) is required";
+            errors.workshop_photo_4 =
+                "Workshop photo 4 (Road - left side) is required";
         }
 
         setFieldErrors(errors);
@@ -93,7 +94,7 @@ const Step4 = ({ onNext, onPrevious }) => {
     const getFileFromFileList = (fileList) => {
         if (!fileList || fileList.length === 0) return null;
         const file = fileList[0];
-        // @files-ui/react provides file.file for the actual File object
+
         return file.file || file;
     };
 
@@ -102,7 +103,9 @@ const Step4 = ({ onNext, onPrevious }) => {
         setSubmitError("");
 
         if (!validateForm()) {
-            setSubmitError("Please upload all required documents before submitting.");
+            setSubmitError(
+                "Please upload all required documents before submitting."
+            );
             window.scrollTo({ top: 0, behavior: "smooth" });
             return;
         }
@@ -110,7 +113,7 @@ const Step4 = ({ onNext, onPrevious }) => {
         setProcessing(true);
 
         const formData = new FormData();
-        
+
         if (licenseNumber) {
             formData.append("license_number", licenseNumber);
         }
@@ -143,15 +146,21 @@ const Step4 = ({ onNext, onPrevious }) => {
                 if (errors.message) {
                     setSubmitError(errors.message);
                 }
-                // Map backend errors to field errors
+
                 const mappedErrors = {};
-                Object.keys(errors).forEach(key => {
-                    if (key.includes('cnic_front')) mappedErrors.cnic_front = errors[key];
-                    if (key.includes('cnic_back')) mappedErrors.cnic_back = errors[key];
-                    if (key.includes('workshop_photo_1')) mappedErrors.workshop_photo_1 = errors[key];
-                    if (key.includes('workshop_photo_2')) mappedErrors.workshop_photo_2 = errors[key];
-                    if (key.includes('workshop_photo_3')) mappedErrors.workshop_photo_3 = errors[key];
-                    if (key.includes('workshop_photo_4')) mappedErrors.workshop_photo_4 = errors[key];
+                Object.keys(errors).forEach((key) => {
+                    if (key.includes("cnic_front"))
+                        mappedErrors.cnic_front = errors[key];
+                    if (key.includes("cnic_back"))
+                        mappedErrors.cnic_back = errors[key];
+                    if (key.includes("workshop_photo_1"))
+                        mappedErrors.workshop_photo_1 = errors[key];
+                    if (key.includes("workshop_photo_2"))
+                        mappedErrors.workshop_photo_2 = errors[key];
+                    if (key.includes("workshop_photo_3"))
+                        mappedErrors.workshop_photo_3 = errors[key];
+                    if (key.includes("workshop_photo_4"))
+                        mappedErrors.workshop_photo_4 = errors[key];
                 });
                 setFieldErrors(mappedErrors);
                 window.scrollTo({ top: 0, behavior: "smooth" });
@@ -159,17 +168,17 @@ const Step4 = ({ onNext, onPrevious }) => {
         });
     };
 
-    const FileUploadSection = ({ 
-        label, 
-        helpText, 
-        files, 
-        setFiles, 
-        fieldName, 
+    const FileUploadSection = ({
+        label,
+        helpText,
+        files,
+        setFiles,
+        fieldName,
         required = false,
-        icon: Icon = Camera 
+        icon: Icon = Camera,
     }) => {
         const error = fieldErrors[fieldName] || pageErrors?.[fieldName];
-        
+
         return (
             <div className="mb-6">
                 <div className="flex items-center gap-2 mb-2">
@@ -187,10 +196,12 @@ const Step4 = ({ onNext, onPrevious }) => {
                     onChange={handleFileChange(setFiles, fieldName)}
                     value={files}
                     accept="image/*"
-                    maxFileSize={10 * 1024 * 1024}
+                    maxFileSize={2 * 1024 * 1024}
                     maxFiles={1}
                     label="Drop your image here or click to browse"
-                    className={`${error ? 'border-red-300' : 'border-gray-300'}`}
+                    className={`${
+                        error ? "border-red-300" : "border-gray-300"
+                    }`}
                 >
                     {files.map((file) => (
                         <FileMosaic
@@ -210,15 +221,15 @@ const Step4 = ({ onNext, onPrevious }) => {
     return (
         <div className="transition-opacity duration-300 ease-in-out">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
-                {/* Success Message */}
                 {flash?.success && (
                     <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
                         <CheckCircle2 className="w-5 h-5 text-green-600" />
-                        <p className="text-sm text-green-800">{flash.success}</p>
+                        <p className="text-sm text-green-800">
+                            {flash.success}
+                        </p>
                     </div>
                 )}
 
-                {/* Error Message */}
                 {(submitError || pageErrors?.message) && (
                     <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
                         <AlertCircle className="w-5 h-5 text-red-600" />
@@ -230,19 +241,19 @@ const Step4 = ({ onNext, onPrevious }) => {
 
                 <div className="mb-6 sm:mb-8">
                     <div className="flex items-center gap-2 mb-2">
-                        <FileText className="w-6 h-6 sm:w-7 sm:h-7 text-blue-600" />
+                        <FileText className="w-6 h-6 sm:w-7 sm:h-7 text-gray-600" />
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
                             Documents & Verification
                         </h2>
                     </div>
                     <p className="text-gray-600 text-sm sm:text-base">
-                        Upload your identification and required documents to verify your profile 
-                        and enable shop activation. All marked fields are required.
+                        Upload your identification and required documents to
+                        verify your profile and enable shop activation. All
+                        marked fields are required.
                     </p>
                 </div>
 
                 <form onSubmit={handleSubmit}>
-                    {/* License Number */}
                     <div className="mb-6">
                         <div className="flex items-center gap-2 mb-2">
                             <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
@@ -260,10 +271,9 @@ const Step4 = ({ onNext, onPrevious }) => {
                         </p>
                     </div>
 
-                    {/* CNIC Photos */}
                     <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
-                            <IdCard className="w-5 h-5 text-blue-600" />
+                            <IdCard className="w-5 h-5 text-gray-600" />
                             <h3 className="text-lg font-semibold text-gray-800">
                                 Identity Documents
                             </h3>
@@ -290,10 +300,9 @@ const Step4 = ({ onNext, onPrevious }) => {
                         </div>
                     </div>
 
-                    {/* Workshop Photos */}
                     <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
-                            <Building2 className="w-5 h-5 text-blue-600" />
+                            <Building2 className="w-5 h-5 text-gray-600" />
                             <h3 className="text-lg font-semibold text-gray-800">
                                 Workshop Photos
                             </h3>
@@ -338,7 +347,6 @@ const Step4 = ({ onNext, onPrevious }) => {
                         </div>
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-center pt-6 border-t border-gray-200">
                         <div className="w-full sm:w-auto">
                             {onPrevious && (
@@ -356,20 +364,11 @@ const Step4 = ({ onNext, onPrevious }) => {
                         <div className="w-full sm:w-auto">
                             <PrimaryButton
                                 type="submit"
-                                disabled={processing}
+                                processing={processing}
                                 className="w-full sm:w-auto flex items-center justify-center gap-2"
                             >
-                                {processing ? (
-                                    <>
-                                        <span className="animate-spin">⏳</span>
-                                        Uploading...
-                                    </>
-                                ) : (
-                                    <>
-                                        Submit Documents
-                                        <ArrowRight className="w-4 h-4" />
-                                    </>
-                                )}
+                                Submit Documents
+                                <ArrowRight className="w-4 h-4" />
                             </PrimaryButton>
                         </div>
                     </div>
