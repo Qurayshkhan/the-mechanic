@@ -21,11 +21,12 @@ class MechanicOnboardingController extends Controller
 
     public function createGatherInformationForm(Request $request)
     {
+        $user = $request->user();
         return Inertia::render('Mechanic/Onboarding/Form', [
             'mechanicTypes' => $this->mechanicService->getAllMechanicTypes(),
             'skills' => $this->mechanicService->getSkillsByMechanicType(),
-            'services' => $this->mechanicService->getAllServicesByMechanicType($request?->user()?->mechanicInformation?->mechanic_type_id),
-            'mechanicServices' => $this->mechanicService->getMechanicServices($request?->user()?->id ?? null),
+            'services' => $this->mechanicService->getAllServicesByMechanicType($user?->mechanicInformation?->mechanic_type_id),
+            'mechanicServices' => $this->mechanicService->getMechanicServices($user?->id ?? null),
             'filters' => [
                 'mechanic_type_id' => $request->input('mechanic_type_id', ""),
             ]
@@ -82,6 +83,32 @@ class MechanicOnboardingController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return Redirect::back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function storeDocuments(Request $request)
+    {
+        try {
+            $request->validate([
+                'cnic_front' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+                'cnic_back' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+                'workshop_photo_1' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+                'workshop_photo_2' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+                'workshop_photo_3' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+                'workshop_photo_4' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+                'license_number' => 'nullable|string|max:255',
+            ]);
+
+            DB::beginTransaction();
+            $this->mechanicService->storeMechanicDocuments(Auth::id(), $request->all());
+            DB::commit();
+            return Redirect::route("mechanic.registrationForm")->with('success', 'Documents uploaded successfully!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return Redirect::back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Redirect::back()->withErrors(['message' => $e->getMessage()])->withInput();
         }
     }
 }

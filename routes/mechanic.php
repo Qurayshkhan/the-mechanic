@@ -19,4 +19,8 @@ Route::group(['prefix' => 'mechanic'], function () {
         Route::post('/store', [MechanicOnboardingController::class, 'storeMechanicService'])->name('mechanic.storeMechanicService');
         Route::delete('/{id}', [MechanicOnboardingController::class, 'deleteMechanicService'])->name('mechanic.deleteMechanicService');
     });
+
+    Route::prefix('documents')->group(function () {
+        Route::post('/store', [MechanicOnboardingController::class, 'storeDocuments'])->name('mechanic.storeDocuments');
+    });
 });

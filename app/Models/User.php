@@ -115,5 +115,10 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    public function mechanicDocument()
+    {
+        return $this->hasOne(MechanicDocument::class, 'mechanic_id', 'id');
+    }
+
 
 }

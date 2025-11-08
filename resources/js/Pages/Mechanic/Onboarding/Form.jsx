@@ -106,7 +106,10 @@ const MechanicForm = ({ mechanicTypes, skills, services, mechanicServices = [], 
                                 />
                             )}
                             {currentStep === 4 && (
-                                <Step4 />
+                                <Step4
+                                    onNext={handleStepSubmit}
+                                    onPrevious={handlePrevious}
+                                />
                             )}
                         </div>
                     </div>
