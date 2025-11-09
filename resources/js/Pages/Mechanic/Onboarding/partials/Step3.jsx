@@ -197,7 +197,7 @@ const Step3 = ({
 
                 {services && services.length > 0 && (
                     <div className="mb-8">
-                        <div className="flex justify-between items-center mb-4">
+                        <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
                             <h3 className="text-lg font-semibold text-gray-700">
                                 Available Services
                             </h3>
@@ -243,7 +243,7 @@ const Step3 = ({
                 )}
 
                 <div className="border-t border-gray-200 pt-6">
-                    <div className="flex justify-between items-center mb-4">
+                    <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
                         <h3 className="text-lg font-semibold text-gray-700">
                             My Services
                         </h3>
@@ -337,7 +337,7 @@ const Step3 = ({
                 </div>
             </div>
 
-            <Modal show={showModal} onClose={handleCloseModal} maxWidth="2xl">
+            <Modal show={showModal} onClose={handleCloseModal}>
                 <div className="p-6">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-xl font-bold text-gray-800">

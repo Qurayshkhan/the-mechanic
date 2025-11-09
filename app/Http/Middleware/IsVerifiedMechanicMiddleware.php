@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Response;
 
-class MechanicMiddleware
+class IsVerifiedMechanicMiddleware
 {
     /**
      * Handle an incoming request.
@@ -23,11 +23,8 @@ class MechanicMiddleware
             return Redirect::route('login');
         }
         if ($user->type == UserType::MECHANIC->value) {
-            if (!$user->mechanicInformation->is_onboarding_form_complete) {
-                return Redirect::route('mechanic.registrationForm');
-            }
-            if (!$user->mechanicInformation->is_verified) {
-                return Redirect::route('mechanic.waitingPage');
+            if ($user && $user->mechanicInformation->is_verified) {
+                return Redirect::route('dashboard');
             }
         }
         return $next($request);

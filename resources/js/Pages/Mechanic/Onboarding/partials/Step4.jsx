@@ -240,9 +240,9 @@ const Step4 = ({ onNext, onPrevious }) => {
                 )}
 
                 <div className="mb-6 sm:mb-8">
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
                         <FileText className="w-6 h-6 sm:w-7 sm:h-7 text-gray-600" />
-                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
+                        <h2 className="md:text-3xl font-bold text-gray-800">
                             Documents & Verification
                         </h2>
                     </div>

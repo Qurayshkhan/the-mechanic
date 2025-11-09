@@ -6,11 +6,16 @@ import Step2 from "./partials/Step2";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Power } from "lucide-react";
 import { Head, router } from "@inertiajs/react";
-import DangerButton from "@/Components/DangerButton";
 import Step3 from "./partials/Step3";
 import Step4 from "./partials/Step4";
 
-const MechanicForm = ({ mechanicTypes, skills, services, mechanicServices = [], filters }) => {
+const MechanicForm = ({
+    mechanicTypes,
+    skills,
+    services,
+    mechanicServices = [],
+    filters,
+}) => {
     const user = useAuth();
     const { mechanic_information } = user;
     const [currentStep, setCurrentStep] = useState(
@@ -61,7 +66,7 @@ const MechanicForm = ({ mechanicTypes, skills, services, mechanicServices = [], 
             <Head title="Mechanic Onboarding Form" />
             <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100">
                 <div className="w-full min-h-screen flex flex-col">
-                    <div className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-20 flex gap-2 items-center justify-center">
+                    <div className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-20 flex gap-2 items-center justify-center flex-wrap">
                         <StepIndicator
                             currentStep={currentStep}
                             totalSteps={totalSteps}
@@ -69,7 +74,7 @@ const MechanicForm = ({ mechanicTypes, skills, services, mechanicServices = [], 
                         />
                         <PrimaryButton
                             type="button"
-                            className="mx-2 flex items-center gap-2"
+                            className="mx-2 flex items-center gap-2 mb-2"
                             onClick={handleLogout}
                             processing={processing}
                         >

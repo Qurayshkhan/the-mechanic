@@ -32,9 +32,9 @@ const StepIndicator = ({ currentStep, totalSteps, stepLabels }) => {
                                     <div
                                         className={`w-full h-full rounded-full flex items-center justify-center transition-all duration-300 ${
                                             isCompleted
-                                                ? "bg-gray-600 border-blue-600"
+                                                ? "bg-gray-600 border-gray-600"
                                                 : isActive
-                                                ? "bg-gray-600 border-blue-600 ring-4 ring-blue-100"
+                                                ? "bg-gray-600 border-gray-600 ring-4 ring-blue-100"
                                                 : "bg-white border-gray-300"
                                         }`}
                                     >
@@ -79,7 +79,7 @@ const StepIndicator = ({ currentStep, totalSteps, stepLabels }) => {
                 </div>
 
                 <div className="sm:hidden mt-4 text-center">
-                    <span className="text-sm font-medium text-blue-600">
+                    <span className="text-sm font-medium text-gray-600">
                         {stepLabels && stepLabels[currentStep - 1]
                             ? stepLabels[currentStep - 1]
                             : `Step ${currentStep} of ${totalSteps}`}

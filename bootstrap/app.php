@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\IsMechanicOnboardingFormMiddleware;
+use App\Http\Middleware\IsVerifiedMechanicMiddleware;
 use App\Http\Middleware\MechanicMiddleware;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
@@ -40,6 +42,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
+            'is_complete_onboarding_form' => IsMechanicOnboardingFormMiddleware::class,
+            'is_verified_mechanic' => IsVerifiedMechanicMiddleware::class,
             'mechanic' => MechanicMiddleware::class,
 
         ]);
