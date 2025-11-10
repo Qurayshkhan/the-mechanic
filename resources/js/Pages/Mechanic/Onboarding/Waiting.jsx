@@ -44,8 +44,8 @@ const Waiting = () => {
                             verified.
                         </span>
                     </li>
-                    <li className="flex flex-wrap items-center gap-2">
-                        <UserCheck className="w-5 h-5 text-gray-500" />
+                    <li className="flex items-center gap-2">
+                        <UserCheck className="w-5 h-5 text-green-500" />
                         <span>
                             You can log in and start exploring your dashboard
                             soon after approval.

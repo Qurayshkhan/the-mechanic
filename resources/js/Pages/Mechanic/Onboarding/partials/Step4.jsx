@@ -1,23 +1,20 @@
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
-import { Dropzone, FileMosaic } from "@files-ui/react";
 import React, { useState, useEffect } from "react";
 import { router, usePage } from "@inertiajs/react";
 import {
     FileText,
     IdCard,
     Building2,
-    Camera,
     AlertCircle,
     CheckCircle2,
-    Info,
     ArrowLeft,
     ArrowRight,
 } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
+import FileUploadSection from "@/Components/FileUploadSection";
 
 const Step4 = ({ onNext, onPrevious }) => {
     const user = useAuth();
@@ -42,19 +39,6 @@ const Step4 = ({ onNext, onPrevious }) => {
             const doc = user.mechanic_document;
         }
     }, [user]);
-
-    const handleFileChange = (setter, fieldName) => (incomingFiles) => {
-        setter(incomingFiles);
-
-        if (incomingFiles && incomingFiles.length > 0) {
-            setFieldErrors((prev) => ({ ...prev, [fieldName]: null }));
-            setSubmitError("");
-        }
-    };
-
-    const handleRemoveFile = (setter, fieldName) => (id) => {
-        setter((prev) => prev.filter((x) => x.id !== id));
-    };
 
     const validateForm = () => {
         const errors = {};
@@ -166,56 +150,6 @@ const Step4 = ({ onNext, onPrevious }) => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
             },
         });
-    };
-
-    const FileUploadSection = ({
-        label,
-        helpText,
-        files,
-        setFiles,
-        fieldName,
-        required = false,
-        icon: Icon = Camera,
-    }) => {
-        const error = fieldErrors[fieldName] || pageErrors?.[fieldName];
-
-        return (
-            <div className="mb-6">
-                <div className="flex items-center gap-2 mb-2">
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-                    <InputLabel value={label} />
-                    {required && <span className="text-red-500">*</span>}
-                </div>
-                {helpText && (
-                    <p className="text-xs sm:text-sm text-gray-500 mb-2 flex items-center gap-1">
-                        <Info className="w-3 h-3" />
-                        {helpText}
-                    </p>
-                )}
-                <Dropzone
-                    onChange={handleFileChange(setFiles, fieldName)}
-                    value={files}
-                    accept="image/*"
-                    maxFileSize={2 * 1024 * 1024}
-                    maxFiles={1}
-                    label="Drop your image here or click to browse"
-                    className={`${
-                        error ? "border-red-300" : "border-gray-300"
-                    }`}
-                >
-                    {files.map((file) => (
-                        <FileMosaic
-                            key={file.id}
-                            {...file}
-                            onDelete={handleRemoveFile(setFiles, fieldName)}
-                            info
-                            preview
-                        />
-                    ))}
-                </Dropzone>
-                {error && <InputError message={error} className="mt-1" />}
-            </div>
-        );
     };
 
     return (
