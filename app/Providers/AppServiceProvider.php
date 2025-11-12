@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App;
+use App\Interface\MechanicDocumentInterface;
 use App\Interface\MechanicInformationInterface;
 use App\Interface\MechanicServiceInterface;
 use App\Interface\ServiceInterface;
@@ -17,12 +17,13 @@ use App\Repositories\PermissionRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\ServiceRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Lang;
-use Route;
+use Illuminate\Support\Facades\Route;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
             MechanicInformationInterface::class => MechanicInformationRepository::class,
             ServiceInterface::class => ServiceRepository::class,
             MechanicServiceInterface::class => MechanicServiceRepository::class,
+            MechanicDocumentInterface::class => MechanicInformationRepository::class,
         ];
 
         foreach ($repositories as $interface => $repository) {

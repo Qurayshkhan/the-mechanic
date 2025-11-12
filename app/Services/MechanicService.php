@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\MechanicDocument;
 use App\Models\MechanicInformation;
+use App\Repositories\MechanicDocumentRepository;
 use App\Repositories\MechanicInformationRepository;
 use App\Repositories\MechanicServiceRepository;
 use App\Repositories\MechanicTypesRepository;
@@ -17,8 +18,8 @@ class MechanicService
 {
     use FileTrait;
 
-    protected $userRepository, $mechanicInformationRepository, $mechanicTypesRepository, $skillRepository, $serviceRepository, $mechanicServiceRepository;
-    public function __construct(UserRepository $userRepository, MechanicInformationRepository $mechanicInformationRepository, MechanicTypesRepository $mechanicTypesRepository, SkillsRepository $skillRepository, ServiceRepository $serviceRepository, MechanicServiceRepository $mechanicServiceRepository)
+    protected $userRepository, $mechanicInformationRepository, $mechanicTypesRepository, $skillRepository, $serviceRepository, $mechanicServiceRepository, $mechanicDocumentRepository;
+    public function __construct(UserRepository $userRepository, MechanicInformationRepository $mechanicInformationRepository, MechanicTypesRepository $mechanicTypesRepository, SkillsRepository $skillRepository, ServiceRepository $serviceRepository, MechanicServiceRepository $mechanicServiceRepository, MechanicDocumentRepository $mechanicDocumentRepository)
     {
         $this->userRepository = $userRepository;
         $this->mechanicInformationRepository = $mechanicInformationRepository;
@@ -26,6 +27,7 @@ class MechanicService
         $this->skillRepository = $skillRepository;
         $this->serviceRepository = $serviceRepository;
         $this->mechanicServiceRepository = $mechanicServiceRepository;
+        $this->mechanicDocumentRepository = $mechanicDocumentRepository;
     }
 
 
@@ -91,10 +93,7 @@ class MechanicService
         }
 
 
-        $document = MechanicDocument::updateOrCreate(
-            ['mechanic_id' => $userId],
-            $documentData
-        );
+        $document = $this->mechanicDocumentRepository->updateOrCreateMechanicDocument($userId, $documentData);
 
         $this->mechanicInformationRepository->update($user->id, [
             'step_position' => 5,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mechanic;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OnboardDocumentRequest;
 use App\Services\MechanicService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,19 +87,9 @@ class MechanicOnboardingController extends Controller
         }
     }
 
-    public function storeDocuments(Request $request)
+    public function storeDocuments(OnboardDocumentRequest $request)
     {
         try {
-            $request->validate([
-                'cnic_front' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'cnic_back' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'workshop_photo_1' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'workshop_photo_2' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'workshop_photo_3' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'workshop_photo_4' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'license_number' => 'nullable|string|max:255',
-            ]);
-
             DB::beginTransaction();
             $this->mechanicService->storeMechanicDocuments(Auth::id(), $request->all());
             DB::commit();
