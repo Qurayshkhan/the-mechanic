@@ -22,6 +22,7 @@ const Step3 = ({
         description: "",
         charges: "",
         type: "onsite",
+        duration_minutes: 0.0,
     });
     const [errors, setErrors] = useState({});
     const [processing, setProcessing] = useState(false);
@@ -35,6 +36,7 @@ const Step3 = ({
                 description: editingService.description || "",
                 charges: editingService.charges || "",
                 type: editingService.type || "onsite",
+                duration_minutes: editingService.duration_minutes || "",
             });
         } else {
             setFormData({
@@ -43,6 +45,7 @@ const Step3 = ({
                 description: "",
                 charges: "",
                 type: "onsite",
+                duration_minutes: 0.0,
             });
         }
     }, [editingService]);
@@ -54,6 +57,7 @@ const Step3 = ({
             description: service.description || "",
             charges: service.charges || "",
             type: service.type || "onsite",
+            duration_minutes: service.duration_minutes || 0.0,
         });
         setEditingService(null);
         setShowModal(true);
@@ -67,6 +71,7 @@ const Step3 = ({
             description: "",
             charges: "",
             type: "onsite",
+            duration_minutes: 0.0,
         });
         setEditingService(null);
         setShowModal(true);
@@ -88,21 +93,24 @@ const Step3 = ({
             description: "",
             charges: "",
             type: "onsite",
+            duration_minutes: 0.0,
         });
         setErrors({});
     };
 
     const validateForm = () => {
         const newErrors = {};
-        if (!formData.name.trim()) {
-            newErrors.name = "Service name is required";
-        }
-        if (!formData.charges || parseFloat(formData.charges) <= 0) {
+        if (!formData.name.trim()) newErrors.name = "Service name is required";
+        if (!formData.charges || parseFloat(formData.charges) <= 0)
             newErrors.charges = "Valid charges amount is required";
-        }
-        if (!formData.type) {
-            newErrors.type = "Service type is required";
-        }
+        if (!formData.type) newErrors.type = "Service type is required";
+        if (
+            !formData.duration_minutes ||
+            parseInt(formData.duration_minutes) <= 0
+        )
+            newErrors.duration_minutes =
+                "Duration must be greater than 0 minutes";
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -121,6 +129,7 @@ const Step3 = ({
                 description: formData.description,
                 charges: formData.charges,
                 type: formData.type,
+                duration_minutes: formData.duration_minutes,
             },
             {
                 preserveScroll: true,
@@ -445,6 +454,31 @@ const Step3 = ({
                                 </select>
                                 <InputError
                                     message={errors.type}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div>
+                                <InputLabel
+                                    htmlFor="duration_minutes"
+                                    value="Duration (minutes) *"
+                                />
+                                <TextInput
+                                    id="duration_minutes"
+                                    type="number"
+                                    min="1"
+                                    value={formData.duration_minutes}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            duration_minutes: e.target.value,
+                                        })
+                                    }
+                                    className="mt-1 block w-full"
+                                    placeholder="Enter duration in minutes"
+                                />
+                                <InputError
+                                    message={errors.duration_minutes}
                                     className="mt-2"
                                 />
                             </div>

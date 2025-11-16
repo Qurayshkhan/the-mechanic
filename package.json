@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "@files-ui/react": "^1.2.5",
+        "@react-google-maps/api": "^2.20.7",
         "flag-icons": "^7.5.0",
         "formik": "^2.4.6",
         "lucide": "^0.545.0",

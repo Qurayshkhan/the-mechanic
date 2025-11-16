@@ -56,6 +56,8 @@ class MechanicService
                 'years_of_experience' => $data['years_of_experience'],
                 'work_shop_name' => $data['work_shop_name'],
                 'work_shop_address' => $data['work_shop_address'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude'],
                 'city' => $data['city'],
                 'area' => $data['area'],
             ]);

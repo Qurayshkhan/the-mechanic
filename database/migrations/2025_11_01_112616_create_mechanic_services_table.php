@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->longText('description')->nullable();
             $table->string('charges')->nullable();
             $table->string('type')->nullable();
+            $table->double('duration_minutes')->nullable()->comment("Duration in minutes");
             $table->timestamps();
         });
     }

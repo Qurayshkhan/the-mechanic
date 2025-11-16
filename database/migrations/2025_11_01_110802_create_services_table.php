@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->decimal('charges', 10, 2)->default(0);
             $table->string('type')->nullable();
             $table->boolean('status')->default(false);
+            $table->double('duration_minutes')->default(false);
             $table->timestamps();
         });
     }

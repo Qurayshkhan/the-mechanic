@@ -22,7 +22,7 @@ import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
-
+import Autocomplete from "@/Components/AutoComplete";
 const Step2 = ({ onNext, onPrevious, mechanicTypes, skills, filters }) => {
     const user = useAuth();
 
@@ -43,6 +43,8 @@ const Step2 = ({ onNext, onPrevious, mechanicTypes, skills, filters }) => {
         work_shop_address: user?.mechanic_information?.work_shop_address ?? "",
         city: user?.mechanic_information?.city ?? "",
         area: user?.mechanic_information?.area ?? "",
+        latitude: user?.mechanic_information?.latitude || "",
+        longitude: user?.mechanic_information?.longitude || "",
         step_position: 2,
     };
 
@@ -98,6 +100,12 @@ const Step2 = ({ onNext, onPrevious, mechanicTypes, skills, filters }) => {
             (skill) => skill.mechanic_type_id === values.mechanic_type_id
         );
     }, [skills, values.mechanic_type_id]);
+
+    const handleOnPlacesChange = (data) => {
+        setFieldValue("work_shop_address", data?.address);
+        setFieldValue("latitude", data?.latitude);
+        setFieldValue("longitude", data?.longitude);
+    };
 
     return (
         <Card className="w-full">
@@ -238,15 +246,23 @@ const Step2 = ({ onNext, onPrevious, mechanicTypes, skills, filters }) => {
                                 value="Workshop address"
                             />
                         </div>
-                        <TextInput
-                            name="work_shop_address"
-                            id="workShopAddress"
-                            onChange={handleChange}
-                            value={values.work_shop_address}
-                            placeholder="Enter your workshop address"
+
+                        <p className="mb-2 text-gray-600 text-sm sm:text-base">
+                            Enter your workshop address. You can select from
+                            suggestions while typing, click{" "}
+                            <span className="font-semibold text-green-500">
+                                "Use Current Location"
+                            </span>{" "}
+                            if you are at the workshop, or type it manually to
+                            ensure the address is correct.
+                        </p>
+
+                        <Autocomplete
                             onBlur={handleBlur}
-                            className="w-full mt-1"
+                            value={values.work_shop_address}
+                            handleOnPlacesChange={handleOnPlacesChange}
                         />
+
                         {errors.work_shop_address &&
                             touched.work_shop_address && (
                                 <InputError
@@ -254,6 +270,7 @@ const Step2 = ({ onNext, onPrevious, mechanicTypes, skills, filters }) => {
                                 />
                             )}
                     </div>
+
                     <div className="mb-4 sm:mb-5">
                         <div className="flex items-center gap-2 mb-2">
                             <Building className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />

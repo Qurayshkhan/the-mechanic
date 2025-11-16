@@ -12,6 +12,7 @@ class MechanicService extends Model
         'description',
         'charges',
         'type',
+        'duration_minutes',
     ];
 
     protected $casts = [
