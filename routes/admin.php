@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\MechanicController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'permission:admin']], function () {
@@ -31,5 +32,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'permiss
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         Route::put('/{user}/update', [UserController::class, 'update'])->name('admin.user.update');
         Route::delete('/{user}/delete', [UserController::class, 'delete'])->name('admin.users.destroy');
+
+
+        Route::get('/mechanics', [MechanicController::class, 'index'])->name('admin.mechanics');
     });
 });

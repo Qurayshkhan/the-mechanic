@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Status;
 use App\Models\MechanicType;
 use App\Models\Skill;
 use App\Models\User;
@@ -17,6 +18,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(User::class, 'mechanic_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignIdFor(MechanicType::class)->nullable()->constrained('mechanic_types')->cascadeOnDelete();
+            $table->tinyInteger('status')->default(Status::STATUS_PENDING)->nullable();
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_onboarding_form_complete')->default(false);
             $table->string('work_shop_name')->nullable();
@@ -28,7 +30,6 @@ return new class extends Migration {
             $table->string('area')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-
             $table->timestamps();
         });
     }

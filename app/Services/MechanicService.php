@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\Status;
 use App\Models\MechanicDocument;
 use App\Models\MechanicInformation;
 use App\Repositories\MechanicDocumentRepository;
@@ -28,6 +29,11 @@ class MechanicService
         $this->serviceRepository = $serviceRepository;
         $this->mechanicServiceRepository = $mechanicServiceRepository;
         $this->mechanicDocumentRepository = $mechanicDocumentRepository;
+    }
+
+    public function getMechanics()
+    {
+        return $this->mechanicInformationRepository->getAllMechanicsInformation();
     }
 
 
@@ -100,6 +106,7 @@ class MechanicService
         $this->mechanicInformationRepository->update($user->id, [
             'step_position' => 5,
             'is_onboarding_form_complete' => true,
+            'status' => Status::STATUS_COMPLETE->value,
         ]);
 
         return $document;

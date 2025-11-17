@@ -40,6 +40,7 @@ class PermissionSeeder extends Seeder
                 'edit_user',
                 'update_user',
                 'delete_user',
+                'view_mechanics'
             ],
             'Profile Management' => [
                 'view_profile',

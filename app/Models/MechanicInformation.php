@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class MechanicInformation extends Model
@@ -20,10 +22,32 @@ class MechanicInformation extends Model
         'area',
         'city',
         'address',
+        'status'
     ];
 
     public function mechanic()
     {
         return $this->belongsTo(User::class, 'mechanic_id', 'id');
+    }
+
+    protected function status(): Attribute
+    {
+        return Attribute::make(
+            function ($value) {
+                switch ($value) {
+                    case Status::STATUS_PENDING->value:
+                        return "Pending";
+                    case Status::STATUS_APPROVED->value:
+                        return "Approved";
+                    case Status::STATUS_COMPLETE->value:
+                        return "Completed";
+                    case Status::STATUS_REJECTED->value:
+                        return "Rejected";
+
+                    default:
+                        return "Invalid status";
+                }
+            }
+        );
     }
 }

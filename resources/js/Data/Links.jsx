@@ -21,7 +21,12 @@ export const links = [
         icon: <Users2 />,
         type: "view_users",
         subLinks: [
-            { name: "All Users", link: "admin.users", type: "view_users" },
+            { name: "Users", link: "admin.users", type: "view_users" },
+            {
+                name: "Mechanics",
+                link: "admin.mechanics",
+                type: "view_mechanics",
+            },
         ],
     },
 ];
