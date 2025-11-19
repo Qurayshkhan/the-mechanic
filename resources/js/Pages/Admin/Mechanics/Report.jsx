@@ -105,7 +105,7 @@ const Report = ({ mechanics, filters }) => {
                                         </td>
 
                                         <td className="py-3 px-4">
-                                            <div className="flex justify-center gap-3">
+                                            <div className="flex  items-center gap-3">
                                                 {mechanic?.is_verified ? (
                                                     <SuccessButton
                                                         disabled={isVerifying}
