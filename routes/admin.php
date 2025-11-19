@@ -34,6 +34,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'permiss
         Route::delete('/{user}/delete', [UserController::class, 'delete'])->name('admin.users.destroy');
 
 
-        Route::get('/mechanics', [MechanicController::class, 'index'])->name('admin.mechanics');
+        Route::prefix("mechanics")->group(function () {
+            Route::get('/', [MechanicController::class, 'index'])->name('admin.mechanics');
+            Route::put('/update-mechanic-status/{user}', [MechanicController::class, 'updateStatus'])->name('admin.mechanics.updateStatus');
+        });
     });
 });

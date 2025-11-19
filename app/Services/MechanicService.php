@@ -141,4 +141,12 @@ class MechanicService
     {
         return $this->mechanicServiceRepository->delete($id);
     }
+
+    public function mechanicUpdateService($mechanicId, $data)
+    {
+        return $this->mechanicInformationRepository->update(
+            $mechanicId,
+            ['is_verified' => $data['is_verified']]
+        );
+    }
 }

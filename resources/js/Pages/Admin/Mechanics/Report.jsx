@@ -5,16 +5,32 @@ import { can, getVariant } from "@/helpers";
 import useAuth from "@/hooks/useAuth";
 import MasterLayout from "@/Layouts/MasterLayout";
 import { Head, Link, router, useRemember, Deferred } from "@inertiajs/react";
-import { Edit } from "lucide-react";
-import React from "react";
+import { Edit, Eye } from "lucide-react";
+import React, { useState } from "react";
 import useLang from "@/hooks/useLang";
 import Pagination from "@/Components/Pagination";
 import Badge from "@/Components/Badge";
+import SuccessButton from "@/Components/SuccessButton";
+import WarningButton from "@/Components/WarningButton";
 
 const Report = ({ mechanics, filters }) => {
     const { t } = useLang();
     const userAuth = useAuth();
-
+    const [isVerifying, setIsVerifying] = useState(false);
+    const handleVerifiedAndUnverifiedStatus = (mechanicId, status) => {
+        setIsVerifying(true);
+        router.put(
+            route("admin.mechanics.updateStatus", mechanicId),
+            {
+                is_verified: status,
+            },
+            {
+                onSuccess: () => {
+                    setIsVerifying(false);
+                },
+            }
+        );
+    };
     return (
         <MasterLayout pageTitle="Mechanics">
             <PageHeading
@@ -45,14 +61,17 @@ const Report = ({ mechanics, filters }) => {
                                 <th className="py-3 px-4 text-left font-semibold uppercase text-xs">
                                     {t("Status")}
                                 </th>
-                                <th className="py-3 px-4 text-left font-semibold uppercase text-xs">
+                                {/* <th className="py-3 px-4 text-left font-semibold uppercase text-xs">
                                     {t("Verified")}
+                                </th> */}
+                                <th className="py-3 px-4 text-left font-semibold uppercase text-xs">
+                                    Action
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             {mechanics?.data?.length > 0 ? (
-                                mechanics.data.map((mechanic, index) => (
+                                mechanics?.data?.map((mechanic, index) => (
                                     <tr
                                         key={mechanic.id}
                                         className={`${
@@ -84,24 +103,35 @@ const Report = ({ mechanics, filters }) => {
                                                 "N/A"
                                             )}
                                         </td>
+
                                         <td className="py-3 px-4">
-                                            {mechanic?.is_verified ? (
-                                                <Badge
-                                                    variant={getVariant(
-                                                        "Active"
-                                                    )}
-                                                >
-                                                    Yes
-                                                </Badge>
-                                            ) : (
-                                                <Badge
-                                                    variant={getVariant(
-                                                        "Inactive"
-                                                    )}
-                                                >
-                                                    No
-                                                </Badge>
-                                            )}
+                                            <div className="flex justify-center gap-3">
+                                                {mechanic?.is_verified ? (
+                                                    <SuccessButton
+                                                        disabled={isVerifying}
+                                                        onClick={() =>
+                                                            handleVerifiedAndUnverifiedStatus(
+                                                                mechanic.mechanic_id,
+                                                                false
+                                                            )
+                                                        }
+                                                    >
+                                                        Verified
+                                                    </SuccessButton>
+                                                ) : (
+                                                    <WarningButton
+                                                        disabled={isVerifying}
+                                                        onClick={() =>
+                                                            handleVerifiedAndUnverifiedStatus(
+                                                                mechanic.mechanic_id,
+                                                                true
+                                                            )
+                                                        }
+                                                    >
+                                                        Unverified
+                                                    </WarningButton>
+                                                )}
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
