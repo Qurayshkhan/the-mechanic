@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\MechanicInformation;
 use App\Models\User;
 use App\Services\MechanicService;
 use Illuminate\Http\Request;
@@ -38,5 +39,13 @@ class MechanicController extends Controller
             Db::rollBack();
             return Redirect::back()->withErrors(['message' => $e->getMessage()]);
         }
+    }
+
+    public function edit(MechanicInformation $mechanicInformation)
+    {
+        // dd($mechanicInformation);
+        return Inertia::render('Admin/Mechanics/EditTabs/Basic', [
+            'mechanic' => Inertia::defer(fn() => $mechanicInformation->load('mechanic', 'mechanicType')),
+        ]);
     }
 }

@@ -30,6 +30,11 @@ class MechanicInformation extends Model
         return $this->belongsTo(User::class, 'mechanic_id', 'id');
     }
 
+    public function mechanicType()
+    {
+        return $this->belongsTo(MechanicType::class, 'mechanic_type_id', 'id');
+    }
+
     protected function status(): Attribute
     {
         return Attribute::make(

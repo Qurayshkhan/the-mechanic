@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'permiss
 
         Route::prefix("mechanics")->group(function () {
             Route::get('/', [MechanicController::class, 'index'])->name('admin.mechanics');
+            Route::get('/edit/{mechanicInformation}', [MechanicController::class, 'edit'])->name('admin.mechanics.edit');
             Route::put('/update-mechanic-status/{user}', [MechanicController::class, 'updateStatus'])->name('admin.mechanics.updateStatus');
         });
     });

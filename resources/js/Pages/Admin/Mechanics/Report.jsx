@@ -5,7 +5,7 @@ import { can, getVariant } from "@/helpers";
 import useAuth from "@/hooks/useAuth";
 import MasterLayout from "@/Layouts/MasterLayout";
 import { Head, Link, router, useRemember, Deferred } from "@inertiajs/react";
-import { Edit, Eye } from "lucide-react";
+import { Edit, Edit2, Eye } from "lucide-react";
 import React, { useState } from "react";
 import useLang from "@/hooks/useLang";
 import Pagination from "@/Components/Pagination";
@@ -106,6 +106,17 @@ const Report = ({ mechanics, filters }) => {
 
                                         <td className="py-3 px-4">
                                             <div className="flex  items-center gap-3">
+                                                <Link
+                                                    href={route(
+                                                        "admin.mechanics.edit",
+                                                        {
+                                                            mechanicInformation:
+                                                                mechanic?.id,
+                                                        }
+                                                    )}
+                                                >
+                                                    <Eye className="text-blue-500" />
+                                                </Link>
                                                 {mechanic?.is_verified ? (
                                                     <SuccessButton
                                                         disabled={isVerifying}
